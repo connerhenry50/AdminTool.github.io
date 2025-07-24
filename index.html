@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Site</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Menu</h2>
+    <button class="dropdown-btn">About</button>
+    <div class="dropdown-content">
+      <a href="about.html">About Page</a>
+    </div>
+    <button class="dropdown-btn">Projects</button>
+    <div class="dropdown-content">
+      <a href="project1.html">Project 1</a>
+      <a href="project2.html">Project 2</a>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <h1>Welcome to My Project Site</h1>
+    <p>Select a page from the sidebar.</p>
+  </div>
+
+  <script>
+    document.querySelectorAll('.dropdown-btn').forEach(btn => {
+      btn.addEventListener('click', function () {
+        this.classList.toggle('active');
+        const content = this.nextElementSibling;
+        content.style.display = content.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+  </script>
+</body>
+</html>
