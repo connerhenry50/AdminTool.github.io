@@ -1,5 +1,5 @@
-title: My Site from README
-theme: minima
+title: AdminTool
+remote_theme: sighingnow/jekyll-gitbook
 
 plugins:
   - jekyll-feed
