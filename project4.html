@@ -8,33 +8,34 @@
 <body>
   <div class="sidebar">
     <h2>Menu</h2>
-    <button class="dropdown-btn">About</button>
+    <button class="dropdown-btn" disabled>About</button>
     <div class="dropdown-content">
       <a href="about.html">About Page</a>
-    </div>
+    <</div>
     <button class="dropdown-btn">Projects</button>
     <div class="dropdown-content">
-      <a href="project1.html">Project 1</a>
-      <a href="project2.html">Project 2</a>
+      <a href="project4.html">Project 4</a>
     </div>
   </div>
 
   <div class="main-content">
-    <h1>Project 1</h1>
+    <h1>Project 4</h1>
     <div>
       <a href="#overview">Overview</a> | 
-      <a href="#tech">Technologies</a> | 
+      <a href="dotnetinstall">Installing .NET Framework</a> | 
       <a href="#demo">Demo</a>
     </div>
 
     <section id="overview">
       <h2>Overview</h2>
-      <p>This is an overview of Project 1.</p>
+      <p>This is an overview of Project 4.</p>
     </section>
 
-    <section id="tech">
-      <h2>Technologies</h2>
-      <p>HTML, CSS, JS</p>
+    <section id="dotnetinstall">
+      <h2>Installing .NET Framework</h2>
+      <iframe src="https://dotnet.microsoft.com/en-us/download/dotnet/9.0" width="80%" height="300">
+        <p>Your browser does not support iframes.</p>
+      </iframe>
     </section>
 
     <section id="demo">
@@ -42,7 +43,7 @@
       <p>Some demo content.</p>
     </section>
 
-    <button onclick="location.href='project2.html'">Next →</button>
+    <button onclick="location.href='project4.html'">Next →</button>
   </div>
 
   <script>
