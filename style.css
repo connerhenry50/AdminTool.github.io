@@ -11,9 +11,7 @@ body {
   color: white;
   height: 100vh;
 }
-disabled {
-  background: grey
-}
+
 .sidebar h2 {
   margin-top: 0;
 }
@@ -50,4 +48,7 @@ disabled {
 .main-content {
   padding: 20px;
   flex: 1;
+}
+disabled {
+  background: grey
 }
