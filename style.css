@@ -11,7 +11,9 @@ body {
   color: white;
   height: 100vh;
 }
-
+disabled {
+  background: grey
+}
 .sidebar h2 {
   margin-top: 0;
 }
