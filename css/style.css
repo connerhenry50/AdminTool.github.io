@@ -229,6 +229,9 @@ figure figcaption {
 #fh5co-aside .fh5co-footer span {
   display: block;
 }
+.workbkg {
+  background: contain;
+}
 #fh5co-aside .fh5co-footer ul {
   padding: 0;
   margin: 0;
