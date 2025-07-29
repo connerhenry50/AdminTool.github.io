@@ -231,6 +231,8 @@ figure figcaption {
 }
 .workbkg {
   background: contain;
+  height: 400;
+  width: 300;
 }
 #fh5co-aside .fh5co-footer ul {
   padding: 0;
