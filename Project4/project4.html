@@ -5,55 +5,286 @@
   <title>Project 1</title>
   <link rel="stylesheet" href="../css/style.css" />
 </head>
-<body>
-  <div class="sidebar">
-    <h2>Menu</h2>
-    <button class="dropdown-btn" disabled>About</button>
-    <div class="dropdown-content">
-      <a href="about.html">About Page</a>
-    <</div>
-    <button class="dropdown-btn">Projects</button>
-    <div class="dropdown-content">
-      <a href="project4.html">Project 4</a>
-    </div>
-  </div>
+  <body>
+    <body>
+		<div id="page">
+			<a href="#" class="js-nav-toggle nav-toggle"><i></i></a>
+			<aside id="aside" role="complementary" class="border js-fullheight" style="height: 946px;">
+				<h2 id="logo"><a href="index.html">Conner Henry</a></h2>
+				<nav id="main-menu" role="navigation">
+					<ul>
+						<li><a href="../index.html">Home</a></li>
+						<li><a href="../portfolio.html">Portfolio</a></li>
+						<li><a href="../about.html">About</a></li>
+						<li><a href="../contact.html">Contact</a></li>
+					</ul>
+				</nav>
+			</aside>
+      <aside id="contentbar">
+          <h2>Content</h2>
+           <ol>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#prerequisites">Prerequisites</a></li>
+            <li><a href="#dotnetinstall">Installing .NET Framework</a></li>
+            <li><a href="#powershellinstall">Installing PowerShell</a></li>
+            <li><a href="#visualstudioinstall">Installing Visual Studio 2022</a></li>
+            <li><a href="#vscodeinstall">Installing Visual Studio Code</a></li>
+            <li><a href="#wpfdesign">Designing the UI (WPF)</a></li>
+            <li><a href="#powershellmodules">Installing PowerShell Modules</a></li>
+            <li><a href="#startpowershellproject">Starting PowerShell Project in VS Code</a></li>
+            <li><a href="#loadxaml">Loading the WPF UI in PowerShell</a></li>
+            <li><a href="#configfile">Using a Config File</a></li>
+            <li><a href="#controlbinding">Binding Controls to Variables</a></li>
+            <li><a href="#functionexample">Function Example: Get Active User</a></li>
+            <li><a href="#demo">Demo</a></li>
+          </ol>
+        </aside>
+			<div id="main">
+        
+				<aside id="hero" class="js-fullheight" >
+					<div class="js-fullheight">
+            <div class="container-fluid projpage">
+              <section id="overview">
+                <h2>Overview</h2>
+                <p>This instruction is for building a system administration tool for domain networks using Active Directory and PowerShell. The tool integrates with a graphical user interface (GUI) designed in Windows Presentation Foundation (WPF), and connects to Active Directory through the RSAT module.</p>
+              </section>
 
-  <div class="main-content">
-    <h1>Project 4</h1>
-    <div>
-      <a href="#overview">Overview</a> | 
-      <a href="dotnetinstall">Installing .NET Framework</a> | 
-      <a href="#demo">Demo</a>
-    </div>
+              <section id="prerequisites">
+                <h2>Prerequisites</h2>
+                <ul>
+                  <li>Windows Professional or Enterprise edition installed.</li>
+                  <li>Administrative permissions in Active Directory.</li>
+                  <li>Administrator rights on the local machine.</li>
+                  <li>PowerShell version 5.1 or higher.
+                    <dl>
+                      <dt><small>Check your version by typing <code>$PSVersionTable</code> in PowerShell.</small></dt>
+                    </dl>
+                  </li>
+                  <li>.NET Framework installed.
+                    <dl>
+                      <dt><small>Type <code>dotnet</code> in the command prompt to confirm.</small></dt>
+                    </dl>
+                  </li>
+                </ul>
+              </section>
 
-    <section id="overview">
-      <h2>Overview</h2>
-      <p>This is an overview of Project 4.</p>
-    </section>
+              <section id="dotnetinstall">
+                <h2>Installing .NET Framework</h2>
+                <p>The .NET SDK is typically included with Windows, but you can manually install the latest version if needed. Use the following link:</p>
+                <a href="https://dotnet.microsoft.com/en-us/download/dotnet/9.0" target="_blank">https://dotnet.microsoft.com/en-us/download/dotnet/9.0</a>
+              </section>
 
-    <section id="dotnetinstall">
-      <h2>Installing .NET Framework</h2>
-      <iframe src="https://dotnet.microsoft.com/en-us/download/dotnet/9.0" width="80%" height="300">
-        <p>Your browser does not support iframes.</p>
-      </iframe>
-    </section>
+              <section id="powershellinstall">
+                <h2>Installing PowerShell</h2>
+                <p>PowerShell is typically pre-installed, but to manually install or update it using Winget:</p>
+                <div class="code-container">
+                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                  <pre><code>
+                winget search Microsoft.PowerShell
+                # Agree to terms if prompted
+                winget install --id Microsoft.PowerShell --source winget
+                  </code></pre>
+                </div>
+              </section>
 
-    <section id="demo">
-      <h2>Demo</h2>
-      <p>Some demo content.</p>
-    </section>
+              <section id="visualstudioinstall">
+                <h2>Installing Visual Studio 2022</h2>
+                <p>Download and install the Community Edition from:</p>
+                <a href="https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false" target="_blank">https://visualstudio.microsoft.com/downloads</a>
+                <p>During installation:</p>
+                <ul>
+                  <li>Go to the <strong>Workloads</strong> tab</li>
+                  <li>Select <strong>.NET Desktop Development</strong></li>
+                </ul>
+              </section>
 
-    <button onclick="location.href='project4.html'">Next →</button>
-  </div>
+              <section id="vscodeinstall">
+                <h2>Installing Visual Studio Code</h2>
+                <p>Download and install VS Code from:</p>
+                <a href="https://visualstudio.microsoft.com/downloads/" target="_blank">https://visualstudio.microsoft.com/downloads/</a>
+                <p>Then, install the PowerShell extension:</p>
+                <ol>
+                  <li>Open VS Code</li>
+                  <li>Click the Extensions icon on the left sidebar</li>
+                  <li>Search for "PowerShell"</li>
+                  <li>Install the verified Microsoft PowerShell extension</li>
+                </ol>
+              </section>
 
-  <script>
-    document.querySelectorAll('.dropdown-btn').forEach(btn => {
-      btn.addEventListener('click', function () {
-        this.classList.toggle('active');
-        const content = this.nextElementSibling;
-        content.style.display = content.style.display === 'block' ? 'none' : 'block';
-      });
-    });
-  </script>
-</body>
+              <section id="wpfdesign">
+                <h2>Designing the UI (WPF)</h2>
+                <h3>Creating a WPF Project in Visual Studio</h3>
+                <ol>
+                  <li>Open Visual Studio 2022</li>
+                  <li>Click <strong>New Project</strong></li>
+                  <li>Search for <strong>WPF App (.NET)</strong> with C#</li>
+                  <li>Set the project name and location</li>
+                  <li>Select <strong>.NET 9.0</strong> if available</li>
+                  <li>Click <strong>Create</strong></li>
+                </ol>
+                <p>You can drag controls into the design pane or edit them in the XAML window. Each control has a name (x:Name) for PowerShell to reference.</p>
+                <div class="code-container">
+                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                  <pre><code>
+                &lt;Grid x:Name="LoadingContent_grid" Panel.ZIndex="1" Visibility="Hidden" VerticalAlignment="Center" HorizontalAlignment="Center"/&gt;
+                  </code></pre>
+                </div>
+              </section>
+
+              <section id="powershellmodules">
+                <h2>Installing PowerShell Modules</h2>
+                <h3>Active Directory Module</h3>
+                <p>Option 1: Use Windows Features GUI</p>
+                <ol>
+                  <li>Open Control Panel &gt; Programs &gt; Turn Windows Features on or off</li>
+                  <li>Expand <strong>Remote Server Administration Tools</strong></li>
+                  <li>Enable:
+                    <ul>
+                      <li>Active Directory Domain Services Tools</li>
+                      <li>Active Directory Lightweight Directory Services Tools</li>
+                    </ul>
+                  </li>
+                </ol>
+                <p>Option 2: PowerShell Command</p>
+                <div class="code-container">
+                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                  <pre><code>
+                Get-WindowsCapability -Name RSAT* -Online | Add-WindowsCapability -Online
+                  </code></pre>
+                </div>
+                </section>
+
+              <section id="startpowershellproject">
+                <h2>Starting PowerShell Project in VS Code</h2>
+                <h3>Creating the Script</h3>
+                <ol>
+                  <li>Open VS Code</li>
+                  <li>Create a new file and save as <code>.ps1</code> inside your WPF project folder</li>
+                </ol>
+                <p>At the top of the script, load the modules:</p>
+                <div class="code-container">
+                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                  <pre><code>
+                Import-Module ActiveDirectory
+                  </code></pre>
+                </div>
+                
+              </section>
+
+              <section id="loadxaml">
+                <h2>Loading the WPF UI in PowerShell</h2>
+                <p>Add this code to load the XAML file:</p>
+                <div class="code-container">
+                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                  <pre><code>
+                Add-Type -AssemblyName PresentationFramework
+                [xml]$MainXAML = Get-Content "Path\To\MainWindow.xaml"
+                $MainXAMLReader = New-Object System.Xml.XmlNodeReader $MainXAML
+                $MainWindow = [Windows.Markup.XamlReader]::Load($MainXAMLReader)
+                  </code></pre>
+                </div>
+              </section>
+
+              <section id="configfile">
+                <h2>Using a Config File</h2>
+                <p>Create <code>config.json</code> in your project folder:</p>
+                <div class="code-container">
+                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                  <pre><code>
+                {
+                "User_Exclusions": [],
+                "Computer_Exclusions": [],
+                "OU_Exclusions": []
+                }
+                  </code></pre>
+                </div>
+                <p>Load it in PowerShell with:</p>
+                <div class="code-container">
+                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                  <pre><code>
+                $configPath = "Path\To\config.json"
+                $config = Get-Content -Path $configPath -Raw | ConvertFrom-Json
+                  </code></pre>
+                </div>
+              </section>
+
+              <section id="controlbinding">
+                <h2>Binding Controls to Variables</h2>
+                <p>Assign a control to a variable:</p>
+                <div class="code-container">
+                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                  <pre><code>
+                $DiscoADComputer_btn = $MainWindow.FindName("DiscoADComputer_btn")
+                  </code></pre>
+                </div>
+                <p>Add event handler:</p>
+                <div class="code-container">
+                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                  <pre><code>
+                $DiscoADComputer_btn.Add_Click({
+                  $SelectedComp = $SelectedADPCName_txtbx.Text
+                  Disconnect_ActiveUser($SelectedComp)
+                })
+                  </code></pre>
+                </div>
+              </section>
+
+              <section id="functionexample">
+                <h2>Function Example: Get Active User</h2>
+                <div class="code-container">
+                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                  <pre><code>
+                function Get_ActiveUser {
+                  param([string]$ComputerName)
+                  $lines = query user /server:$ComputerName 2>$null
+                  foreach ($line in $lines) {
+                    if ($line -match '^\s*USERNAME\s+SESSIONNAME') { continue }
+                    $session_info = $line -split '\s{2,}'
+                    if ($session_info[3] -eq "Active") {
+                      return [pscustomobject]@{
+                        Name = $session_info[0].Trim()
+                        Session = $session_info[1]
+                      }
+                    }
+                  }
+                  return "No Active Session"
+                }
+                  </code></pre>
+                </div>
+              </section>
+
+              <section id="demo">
+                <h2>Demo</h2>
+                <p>Below is a sample screenshot and code block for the main UI layout and application logic:</p>
+                <p><strong>UI XAML Block</strong></p>
+                <p><strong>App.xaml Resources</strong></p>
+                <div class="code-container">
+                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                </div>
+
+                <p><strong>Demo Screenshots</strong></p>
+                <img src="screenshot1.png" alt="UI Screenshot" style="width:60%">
+              </section>
+            </div>
+					</div>
+				</aside>
+			</div>
+		</div>
+
+		<!-- jQuery -->
+		<script src="../js/jquery.min.js"></script>
+		<!-- jQuery Easing -->
+		<script src="../js/jquery.easing.1.3.js"></script>
+		<!-- Bootstrap -->
+		<script src="../js/bootstrap.min.js"></script>
+		<!-- Waypoints -->
+		<script src="../js/jquery.waypoints.min.js"></script>
+		<!-- Flexslider -->
+		<script src="../js/jquery.flexslider-min.js"></script>
+
+		<script src="../../demos/demoscript.js"></script>
+		<!-- MAIN JS -->
+		<script src="../js/main.js"></script>
+  
+  </body>
 </html>
