@@ -246,7 +246,27 @@ document.addEventListener("DOMContentLoaded", function () {
   const arrow = toggleBtn.querySelector(".expand-arrow");
 
   toggleBtn.addEventListener("click", function () {
-    arrow.classList.toggle("rotate");
     contentbar.classList.toggle("active");
+    arrow.classList.toggle("rotate");
   });
+});
+document.addEventListener("click", function (e) {
+  const contentbar = document.getElementById("contentbar");
+  const toggleBtn = document.getElementById("toggle-contentbar");
+  const arrow = toggleBtn.querySelector(".expand-arrow");
+
+  const clickedInsideContentbar = contentbar.contains(e.target);
+  const clickedToggleBtn = toggleBtn.contains(e.target);
+  const clickedLinkInsideContentbar =
+    clickedInsideContentbar && e.target.closest("a");
+
+  // Collapse sidebar on mobile under these conditions:
+  if (
+    window.innerWidth <= 768 &&
+    (!clickedInsideContentbar || clickedLinkInsideContentbar) &&
+    !clickedToggleBtn
+  ) {
+    contentbar.classList.remove("active");
+    arrow.classList.remove("rotate");
+  }
 });
