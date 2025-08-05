@@ -692,9 +692,8 @@ body.offcanvas .nav-toggle {
     padding: 1em 0;
   }
   .collageguide {
-  display: flex;
-  flex-wrap: wrap;
-  height: 100px;
+  display: none;
+
   }
 }
 .cards .flex-wrap {
