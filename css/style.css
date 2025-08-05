@@ -87,12 +87,12 @@ td {
   box-sizing: border-box;
 }
 
-.dropdown-arrow {
-  margin-left: 8px;
+.expand-arrow {
+  display: inline-block;
   transition: transform 0.3s ease;
 }
 
-.dropdown-arrow.rotate {
+.expand-arrow.rotate {
   transform: rotate(180deg);
 }
 
@@ -1138,24 +1138,7 @@ body.offcanvas .nav-toggle {
 .credits {
   font-size: smaller;
 }
-#contentbar {
-  padding-bottom: 40px;
-  width: 20%;
-  position: fixed;
-  bottom: 0;
-  top: 4em;
-  left: 0;
-  justify-items: center;
-  -webkit-transition: 0.5s;
-  -o-transition: 0.5s;
-  transition: 0.5s;
-  overflow-y: auto;
-}
-@media screen and (max-width: 100px) {
-  #contentbar {
-    visibility: collapse;
-  }
-}
+
 .nav-toggle i {
   position: relative;
   display: -moz-inline-stack;
@@ -1237,26 +1220,71 @@ body.offcanvas .nav-toggle {
 strong {
   font-weight: bold;
 }
-.nav-toggle {
+.nav-toggle, #toggle-contentbar {
   position: fixed;
   left: 0;
   top: 0px;
   z-index: 9999;
   cursor: pointer;
   opacity: 1;
-  visibility: hidden;
   padding: 20px;
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s;
 }
-/*@media screen and (max-width: 768px) {*/
+@media screen and (max-width: 768px) {
 .nav-toggle {
-  opacity: 1;
-  visibility: visible;
+  visibility: hidden;
 }
-/*}*/
+}
+#contentbar {
+  padding-bottom: 40px;
+  width: 20%;
+  position: fixed;
+  bottom: 0;
+  top: 4em;
+  left: 0;
+  justify-items: center;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+  overflow-y: auto;
+}
+#toggle-contentbar {
+  display: none;
+  position: fixed;
+  top: .5em;
+  left: 1em;
+  z-index: 1001;
+  padding: 10px 15px;
+  font-size: 18px;
+  background: none;
+  border: none;
+}
 
+/* Mobile styles */
+@media screen and (max-width: 768px) {
+  #toggle-contentbar {
+    display: block;
+  }
+
+  #contentbar {
+    display: none;
+    width: 80%;
+    position: fixed;
+    top: 3em;
+    left: 0;
+    background: white;
+    height: calc(100% - 3em);
+    z-index: 1000;
+    overflow-y: auto;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+    padding: 1em;
+  }
+  #contentbar.active {
+    display: block;
+  }
+}
 @media screen and (max-width: 480px) {
   .col-xxs-12 {
     float: none;
