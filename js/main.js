@@ -227,16 +227,26 @@ function updateAnchor(el) {
   el.href = "mailto:" + decoded;
 }
 function toggleTable(headerEl) {
-  const arrow = headerEl.querySelector(".dropdown-arrow");
+  const arrow = headerEl.querySelector(".expand-arrow");
   const table = headerEl.nextElementSibling;
 
   arrow.classList.toggle("rotate");
   table.style.display = table.style.display === "table" ? "none" : "table";
 }
 function toggleCode(headerEl) {
-  const arrow = headerEl.querySelector(".dropdown-arrow");
+  const arrow = headerEl.querySelector(".expand-arrow");
   const div = headerEl.nextElementSibling;
 
   arrow.classList.toggle("rotate");
   div.style.display = div.style.display === "block" ? "none" : "block";
 }
+document.addEventListener("DOMContentLoaded", function () {
+  const toggleBtn = document.getElementById("toggle-contentbar");
+  const contentbar = document.getElementById("contentbar");
+  const arrow = toggleBtn.querySelector(".expand-arrow");
+
+  toggleBtn.addEventListener("click", function () {
+    arrow.classList.toggle("rotate");
+    contentbar.classList.toggle("active");
+  });
+});
