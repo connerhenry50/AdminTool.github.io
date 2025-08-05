@@ -2,274 +2,1583 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Project 1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project 4</title>
   <link rel="stylesheet" href="../css/style.css" />
 </head>
   <body>
-    <body>
-		<div id="page">
-			<a href="#" class="js-nav-toggle nav-toggle"><i></i></a>
-			<aside id="aside" role="complementary" class="border js-fullheight" style="height: 946px;">
-				<h2 id="logo"><a href="index.html">Conner Henry</a></h2>
-				<nav id="main-menu" role="navigation">
-					<ul>
-						<li><a href="../index.html">Home</a></li>
-						<li><a href="../portfolio.html">Portfolio</a></li>
-						<li><a href="../about.html">About</a></li>
-						<li><a href="../contact.html">Contact</a></li>
-					</ul>
-				</nav>
-			</aside>
+
+    <a href="#" class="js-nav-toggle nav-toggle"><i></i></a>
+    <aside id="aside" role="complementary" class="border js-fullheight" >
+      <h2 id="logo"><a href="index.html">Conner Henry</a></h2>
+      <nav id="main-menu" role="navigation">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../portfolio.html">Portfolio</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </aside>
+    
+    <div id="main"> 
       <aside id="contentbar">
-          <h2>Content</h2>
-           <ol>
-            <li><a href="#overview">Overview</a></li>
-            <li><a href="#prerequisites">Prerequisites</a></li>
-            <li><a href="#dotnetinstall">Installing .NET Framework</a></li>
-            <li><a href="#powershellinstall">Installing PowerShell</a></li>
-            <li><a href="#visualstudioinstall">Installing Visual Studio 2022</a></li>
-            <li><a href="#vscodeinstall">Installing Visual Studio Code</a></li>
-            <li><a href="#wpfdesign">Designing the UI (WPF)</a></li>
-            <li><a href="#powershellmodules">Installing PowerShell Modules</a></li>
-            <li><a href="#startpowershellproject">Starting PowerShell Project in VS Code</a></li>
-            <li><a href="#loadxaml">Loading the WPF UI in PowerShell</a></li>
-            <li><a href="#configfile">Using a Config File</a></li>
-            <li><a href="#controlbinding">Binding Controls to Variables</a></li>
-            <li><a href="#functionexample">Function Example: Get Active User</a></li>
-            <li><a href="#demo">Demo</a></li>
-          </ol>
-        </aside>
-			<div id="main">
-        
-				<aside id="hero" class="js-fullheight" >
-					<div class="js-fullheight">
-            <div class="container-fluid projpage">
-              <section id="overview">
-                <h2>Overview</h2>
-                <p>This instruction is for building a system administration tool for domain networks using Active Directory and PowerShell. The tool integrates with a graphical user interface (GUI) designed in Windows Presentation Foundation (WPF), and connects to Active Directory through the RSAT module.</p>
-              </section>
+        <h2>Content</h2>
+        <ol>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#prerequisites">Prerequisites</a></li>
+          <li>
+            <a href="#installation">Installations</a>
+            <ol>
+              <li><a href="#dotnet-install">Installing .NET Framework</a></li>
+              <li><a href="#powershell-install">Installing PowerShell</a></li>
+              <li><a href="#visualstudio-install">Installing Visual Studio 2022</a></li>
+              <li><a href="#vscode-install">Installing Visual Studio Code</a></li>
+            </ol>
+          </li>
+          <li><a href="#design-ui">Designing the UI (WPF)</a></li>
+          <li><a href="#ps-modules-install">Installing PowerShell Modules</a></li>
+          <li><a href="#start-ps-project">Starting PowerShell Project in VS Code</a></li>
+          <li><a href="#load-wpf-ui">Loading the WPF UI in PowerShell</a></li>
+          <li><a href="#config-file">Using a Config File</a></li>
+          <li><a href="#binding-controls">Binding Controls to Variables</a></li>
+          <li><a href="#functions">Function Example: Get Active User</a></li>
+          <li><a href="#demo">Demo</a></li>
+        </ol>
+      </aside>
 
-              <section id="prerequisites">
-                <h2>Prerequisites</h2>
-                <ul>
-                  <li>Windows Professional or Enterprise edition installed.</li>
-                  <li>Administrative permissions in Active Directory.</li>
-                  <li>Administrator rights on the local machine.</li>
-                  <li>PowerShell version 5.1 or higher.
-                    <dl>
-                      <dt><small>Check your version by typing <code>$PSVersionTable</code> in PowerShell.</small></dt>
-                    </dl>
-                  </li>
-                  <li>.NET Framework installed.
-                    <dl>
-                      <dt><small>Type <code>dotnet</code> in the command prompt to confirm.</small></dt>
-                    </dl>
-                  </li>
-                </ul>
-              </section>
-
-              <section id="dotnetinstall">
-                <h2>Installing .NET Framework</h2>
-                <p>The .NET SDK is typically included with Windows, but you can manually install the latest version if needed. Use the following link:</p>
-                <a href="https://dotnet.microsoft.com/en-us/download/dotnet/9.0" target="_blank">https://dotnet.microsoft.com/en-us/download/dotnet/9.0</a>
-              </section>
-
-              <section id="powershellinstall">
-                <h2>Installing PowerShell</h2>
-                <p>PowerShell is typically pre-installed, but to manually install or update it using Winget:</p>
-                <div class="code-container">
-                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                  <pre><code>
-                winget search Microsoft.PowerShell
-                # Agree to terms if prompted
-                winget install --id Microsoft.PowerShell --source winget
-                  </code></pre>
-                </div>
-              </section>
-
-              <section id="visualstudioinstall">
-                <h2>Installing Visual Studio 2022</h2>
-                <p>Download and install the Community Edition from:</p>
-                <a href="https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false" target="_blank">https://visualstudio.microsoft.com/downloads</a>
-                <p>During installation:</p>
-                <ul>
-                  <li>Go to the <strong>Workloads</strong> tab</li>
-                  <li>Select <strong>.NET Desktop Development</strong></li>
-                </ul>
-              </section>
-
-              <section id="vscodeinstall">
-                <h2>Installing Visual Studio Code</h2>
-                <p>Download and install VS Code from:</p>
-                <a href="https://visualstudio.microsoft.com/downloads/" target="_blank">https://visualstudio.microsoft.com/downloads/</a>
-                <p>Then, install the PowerShell extension:</p>
-                <ol>
-                  <li>Open VS Code</li>
-                  <li>Click the Extensions icon on the left sidebar</li>
-                  <li>Search for "PowerShell"</li>
-                  <li>Install the verified Microsoft PowerShell extension</li>
-                </ol>
-              </section>
-
-              <section id="wpfdesign">
-                <h2>Designing the UI (WPF)</h2>
-                <h3>Creating a WPF Project in Visual Studio</h3>
-                <ol>
-                  <li>Open Visual Studio 2022</li>
-                  <li>Click <strong>New Project</strong></li>
-                  <li>Search for <strong>WPF App (.NET)</strong> with C#</li>
-                  <li>Set the project name and location</li>
-                  <li>Select <strong>.NET 9.0</strong> if available</li>
-                  <li>Click <strong>Create</strong></li>
-                </ol>
-                <p>You can drag controls into the design pane or edit them in the XAML window. Each control has a name (x:Name) for PowerShell to reference.</p>
-                <div class="code-container">
-                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                  <pre><code>
-                &lt;Grid x:Name="LoadingContent_grid" Panel.ZIndex="1" Visibility="Hidden" VerticalAlignment="Center" HorizontalAlignment="Center"/&gt;
-                  </code></pre>
-                </div>
-              </section>
-
-              <section id="powershellmodules">
-                <h2>Installing PowerShell Modules</h2>
-                <h3>Active Directory Module</h3>
-                <p>Option 1: Use Windows Features GUI</p>
-                <ol>
-                  <li>Open Control Panel &gt; Programs &gt; Turn Windows Features on or off</li>
-                  <li>Expand <strong>Remote Server Administration Tools</strong></li>
-                  <li>Enable:
-                    <ul>
-                      <li>Active Directory Domain Services Tools</li>
-                      <li>Active Directory Lightweight Directory Services Tools</li>
-                    </ul>
-                  </li>
-                </ol>
-                <p>Option 2: PowerShell Command</p>
-                <div class="code-container">
-                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                  <pre><code>
-                Get-WindowsCapability -Name RSAT* -Online | Add-WindowsCapability -Online
-                  </code></pre>
-                </div>
+      <div id="hero">
+          <div class="container-fluid projpage">
+            <section id="overview">
+              <h2>Overview</h2>
+              <p>This instruction is for building a system administration tool for domain networks using Active Directory and PowerShell. The tool integrates with a graphical user interface (GUI) designed in Windows Presentation Foundation (WPF), and connects to Active Directory through the RSAT module.</p>
+            </section>
+            <hr class="solid">
+            <section id="prerequisites">
+              <h2>Prerequisites</h2>
+              <ul>
+                <li>Windows Professional or Enterprise edition installed.</li>
+                <li>Administrative permissions in Active Directory.</li>
+                <li>Administrator rights on the local machine.</li>
+                <li>PowerShell version 5.1 or higher.
+                    <p><small>Check your version by typing <code>$PSVersionTable</code> in PowerShell.</small></p>
+                </li>
+                <li>.NET Framework installed.
+                    <p><small>Type <code>dotnet</code> in the command prompt to confirm.</small></p>
+                </li>
+                <li>Recommended Hardware:
+                  <ul>
+                    <li>1.6 GHz or faster processor</li>
+                    <li>Minimum 4 GB of RAM</li>
+                    <li>Minimum of 850 MB up to 210 GB Hard disk space</li>
+                  </ul>
+                </li>
+                <li>Visual Studio 2022 System Requirements:
+                  <ul>
+                    <li>System Requirements: https://learn.microsoft.com/en-us/visualstudio/releases/2022/system-requirements</li>
+                    <li>License Terms: https://visualstudio.microsoft.com/license-terms/</li>
+                  </ul>
+                </li>
+              </ul>
+            </section>
+            <hr class="solid">
+            <section id="installation">    
+                <h2>Installation Guide</h2>
+                <p>This section walks you through installing the essential tools for .NET and PowerShell development, including the .NET SDK, PowerShell, Visual Studio, and Visual Studio Code.</p>
+                <section id="dotnet-install"> 
+                <h3>1. Install .NET SDK</h3>
+                    <p>The .NET SDK is often included with Windows, but if you need the latest version, download it manually from the following link:</p>
+                    <a href="https://dotnet.microsoft.com/en-us/download/dotnet/9.0" target="_blank">https://dotnet.microsoft.com/en-us/download/dotnet/9.0</a>
+                    <a href="https://dotnet.microsoft.com/en-us/download/dotnet/9.0" target="_blank"><img class="imgguide" src="images/dotnetinstallpage.png"></a>
+                    <p>Select the correct version based on your system. You can check your system type by searching on Windows <strong>System Information</strong></p>
+                    <img class="imgguide" src="images/CheckingSystemType.png">
                 </section>
+                <section id="powershell-install">
+                <h3>2. Install or Update PowerShell</h3>
+                <p>PowerShell is usually pre-installed on Windows. To manually install or update it using Winget:</p>
+                <div class="code-container">
+                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                  <pre><code>
+  winget search Microsoft.PowerShell                        # Searches for PowerShell package
+  winget install --id Microsoft.PowerShell --source winget  # Installs PowerShell from winget source (agree to terms if prompted)
 
-              <section id="startpowershellproject">
+                </code></pre>
+              </div>
+            </section>
+
+            <section id="visualstudio-install">
+              <h3>3. Install Visual Studio 2022</h3>
+              <p>Download and install the Community Edition from:</p>
+              <a href="https://visualstudio.microsoft.com/downloads" target="_blank">https://visualstudio.microsoft.com/downloads</a>
+              <a href="https://visualstudio.microsoft.com/downloads" target="_blank"><img class="imgguide" src="images/VisStudioDownloadPg.png"></a>
+              <p>During installation:</p>
+              <ul>
+                <li>Go to the <strong>Workloads</strong> tab</li>
+                <li>Select <strong>.NET Desktop Development</strong><img class="imgguide" src="images/vs-installer-workloads.png"><p>For individual components, keep the default. Also be sure to choose your preferred language.</p></li>
+              </ul>
+            </section>
+
+            <section id="vscode-install">
+              <h3>4. Install Visual Studio Code</h3>
+              <p>Download and install VS Code from:</p>
+              <a href="https://code.visualstudio.com/downloads" target="_blank">https://code.visualstudio.com/downloads</a>
+              <a href="https://code.visualstudio.com/downloads" target="_blank"><img class="imgguide" src="images/vscodedownloadbtn.png"></a>
+              <p>Then, install the PowerShell extension:</p>
+              <ol>
+                <li>Open VS Code</li>
+                <li>Click the Extensions icon on the left sidebar</li>
+                <li>Search for "PowerShell"</li>
+                <li>Install the verified Microsoft PowerShell extension</li>
+              </ol>
+              <img class="imgguide" src="images/powershellextension.png">
+            </section>
+          </section>
+          <hr class="solid">
+          <section id="design-ui">
+            <h2>Designing the UI (WPF)</h2>
+            <h3>Creating a WPF Project in Visual Studio</h3>
+            <ol>
+              <li>Open Visual Studio 2022</li>
+              <li>Click <strong>New Project</strong></li>
+              <li>Search for <strong>WPF App (.NET)</strong> with C#</li>
+              <li>Set the project name and location</li>
+              <li>Select <strong>.NET 9.0</strong> if available</li>
+              <li>Click <strong>Create</strong></li>
+            </ol>
+            <div class="collageguide">
+                <img class="imgguide" src="images/visualstudio_newproj.png">
+                <img class="imgguide" src="images/visualstudiodemo_create.png">
+            </div>
+            <p>You can drag controls into the design pane or edit them in the XAML window. Each control has a name (x:Name) for PowerShell to reference.</p>
+            <div class="code-container">
+              <button class="copy-button" onclick="copyCode(this)">Copy</button>
+              <pre><code>
+  &lt;Grid x:Name="LoadingContent_grid" Panel.ZIndex="1" Visibility="Hidden" VerticalAlignment="Center" HorizontalAlignment="Center"/&gt;
+    # This is a hidden loading panel centered on the screen
+    # It will be shown/hidden dynamically during script operations
+              </code></pre>
+              <div class="table-toggle-header" onclick="toggleTable(this)">
+                Show WPF Control Icons and Descriptions
+                <span class="dropdown-arrow">&#9660;</span>
+                </div>
+              <table class="expandable-content">
+                  <thead>
+                      <tr>
+                        <th>
+                            <span>Icon</span>
+                        </th>
+                        <th>
+                            <span>Control Name</span>
+                        </th>
+                        <th>
+                            <span>Description</span>
+                        </th>
+                        
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/BorderElement.svg"
+                                      alt="BorderElement"
+                                  />
+                              </td>
+                              <td>
+                                  <span>BorderElement</span>
+                              </td>
+                              <td>
+                                  <span>Adds a border around child content with optional padding.</span>
+                              </td>
+                      </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/Button.svg"
+                                      alt="Button"
+                                  />
+                              </td>
+                              <td>
+                                  <span>Button</span>
+                              </td>
+                              <td>
+                                  <span>Clickable control that triggers an action.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/Calendar.svg"
+                                      alt="Calendar"
+                                  />
+                              </td>
+                              <td>
+                                  <span>Calendar</span>
+                              </td>
+                              <td>
+                                  <span>Displays a calendar UI for date selection.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/CanvasElement.svg"
+                                      alt="CanvasElement"
+                                  />
+                              </td>
+                              <td>
+                                  <span>Canvas</span>
+                              </td>
+                              <td>
+                                  <span>Layout panel allowing absolute positioning of child elements.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/CheckBoxChecked.svg"
+                                      alt="CheckBoxChecked"
+                                  />
+                              </td>
+                              <td>
+                                  <span>CheckBox</span>
+                              </td>
+                              <td>
+                                  <span>Allows user to select or deselect a boolean option.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/ComboBox.svg"
+                                      alt="ComboBox"
+                                  />
+                              </td>
+                              <td>
+                                  <span>ComboBox</span>
+                              </td>
+                              <td>
+                                  <span>Drop-down list allowing selection from multiple options.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/ContentControlElement.svg"
+                                      alt="ContentControlElement"
+                                  />
+                              </td>
+                              <td>
+                                  <span>ContentControl</span>
+                              </td>
+                              <td>
+                                  <span>Base class for controls containing a single piece of content.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/DataGrid.svg"
+                                      alt="DataGrid"
+                                  />
+                              </td>
+                              <td>
+                                  <span>DataGrid</span>
+                              </td>
+                              <td>
+                                  <span>Displays and edits tabular data with rows and columns.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/DateTimePicker.svg"
+                                      alt="DateTimePicker"
+                                  />
+                              </td>
+                              <td>
+                                  <span>DatePicker</span>
+                              </td>
+                              <td>
+                                  <span>Combines a text box and calendar for date input.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/DockPanel.svg"
+                                      alt="DockPanel"
+                                  />
+                              </td>
+                              <td>
+                                  <span>DockPanel</span>
+                              </td>
+                              <td>
+                                  <span>Layout panel that docks child elements to edges.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/DocumentViewer.svg"
+                                      alt="DocumentViewer"
+                                  />
+                              </td>
+                              <td>
+                                  <span>DocumentViewer</span>
+                              </td>
+                              <td>
+                                  <span>Displays XPS documents with navigation and zoom.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/Ellipse.svg"
+                                      alt="Ellipse"
+                                  />
+                              </td>
+                              <td>
+                                  <span>Ellipse</span>
+                              </td>
+                              <td>
+                                  <span>Draws an ellipse shape.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/Expander.svg"
+                                      alt="Expander"
+                                  />
+                              </td>
+                              <td>
+                                  <span>Expander</span>
+                              </td>
+                              <td>
+                                  <span>Toggle-able section that shows/hides additional content.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/FrameContainer.svg"
+                                      alt="FrameContainer"
+                                  />
+                              </td>
+                              <td>
+                                  <span>Frame</span>
+                              </td>
+                              <td>
+                                  <span>Hosts navigable pages, like a mini browser.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/Grid.svg"
+                                      alt="Grid"
+                                  />
+                              </td>
+                              <td>
+                                  <span>Grid</span>
+                              </td>
+                              <td>
+                                  <span>Flexible layout container with rows and columns.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/GridSplitter.svg"
+                                      alt="GridSplitter"
+                                  />
+                              </td>
+                              <td>
+                                  <span>GridSplitter</span>
+                              </td>
+                              <td>
+                                  <span>Allows resizing of columns or rows in a Grid.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/GroupBox.svg"
+                                      alt="GroupBox"
+                                  />
+                              </td>
+                              <td>
+                                  <span>GroupBox</span>
+                              </td>
+                              <td>
+                                  <span>Container with a border and header for grouping controls.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/Image.svg"
+                                      alt="Image"
+                                  />
+                              </td>
+                              <td>
+                                  <span>Image</span>
+                              </td>
+                              <td>
+                                  <span>Displays images from files or URIs.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/Label.svg"
+                                      alt="Label"
+                                  />
+                              </td>
+                              <td>
+                                  <span>Label</span>
+                              </td>
+                              <td>
+                                  <span>Displays non-editable text, typically for descriptions.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/ListBox.svg"
+                                      alt="ListBox"
+                                  />
+                              </td>
+                              <td>
+                                  <span>ListBox</span>
+                              </td>
+                              <td>
+                                  <span>Shows a vertical list of selectable items.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/ListView.svg"
+                                      alt="ListView"
+                                  />
+                              </td>
+                              <td>
+                                  <span>ListView</span>
+                              </td>
+                              <td>
+                                  <span>Extended ListBox with layout, view, and column support.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/Media.svg"
+                                      alt="Media"
+                                  />
+                              </td>
+                              <td>
+                                  <span>Media</span>
+                              </td>
+                              <td>
+                                  <span>Plays audio or video files.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/MenuItem.svg"
+                                      alt="MenuItem"
+                                  />
+                              </td>
+                              <td>
+                                  <span>Menu</span>
+                              </td>
+                              <td>
+                                  <span>Container for a hierarchical set of menu items.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/PasswordBox.svg"
+                                      alt="PasswordBox"
+                                  />
+                              </td>
+                              <td>
+                                  <span>PasswordBox</span>
+                              </td>
+                              <td>
+                                  <span>TextBox designed to securely input passwords (masked characters).</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/ProgressBar.svg"
+                                      alt="ProgressBar"
+                                  />
+                              </td>
+                              <td>
+                                  <span>ProgressBar</span>
+                              </td>
+                              <td>
+                                  <span>Shows progress of a task with visual bar.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/RadioButton.svg"
+                                      alt="RadioButton"
+                                  />
+                              </td>
+                              <td>
+                                  <span>RadioButton</span>
+                              </td>
+                              <td>
+                                  <span>Select one option from a group of mutually exclusive options.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/Rectangle.svg"
+                                      alt="Rectangle"
+                                  />
+                              </td>
+                              <td>
+                                  <span>Rectangle</span>
+                              </td>
+                              <td>
+                                  <span>Draws a rectangle shape.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/RichTextBox.svg"
+                                      alt="RichTextBox"
+                                  />
+                              </td>
+                              <td>
+                                  <span>RichTextBox</span>
+                              </td>
+                              <td>
+                                  <span>Text editor supporting rich formatting (bold, font, etc.).</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/VerticalScrollBar.svg"
+                                      alt="VerticalScrollBar"
+                                  />
+                              </td>
+                              <td>
+                                  <span>ScrollBar</span>
+                              </td>
+                              <td>
+                                  <span>Adds vertical/horizontal scrolling capability.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/ScrollViewer.svg"
+                                      alt="ScrollViewer"
+                                  />
+                              </td>
+                              <td>
+                                  <span>ScrollViewer</span>
+                              </td>
+                              <td>
+                                  <span>Makes any content scrollable in a defined area.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/ElementSeparator.svg"
+                                      alt="ElementSeparator"
+                                  />
+                              </td>
+                              <td>
+                                  <span>Separator</span>
+                              </td>
+                              <td>
+                                  <span>Horizontal or vertical line used to separate content (typically in menus or toolbars).</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/Slider.svg"
+                                      alt="Slider"
+                                  />
+                              </td>
+                              <td>
+                                  <span>Slider</span>
+                              </td>
+                              <td>
+                                  <span>Lets users select a numeric value along a range visually.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/StackPanel.svg"
+                                      alt="StackPanel"
+                                  />
+                              </td>
+                              <td>
+                                  <span>StackPanel</span>
+                              </td>
+                              <td>
+                                  <span>Arranges child elements in a vertical or horizontal line.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/StatusStrip.svg"
+                                      alt="StatusStrip"
+                                  />
+                              </td>
+                              <td>
+                                  <span>StatusBar</span>
+                              </td>
+                              <td>
+                                  <span>Displays contextual status information at the bottom of an app.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/Tab.svg"
+                                      alt="Tab"
+                                  />
+                              </td>
+                              <td>
+                                  <span>TabControl</span>
+                              </td>
+                              <td>
+                                  <span>Creates a tabbed interface for organizing multiple views.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/TextBlock.svg"
+                                      alt="TextBlock"
+                                  />
+                              </td>
+                              <td>
+                                  <span>TextBlock</span>
+                              </td>
+                              <td>
+                                  <span>Lightweight control for displaying simple text.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/TextBox.svg"
+                                      alt="TextBox"
+                                  />
+                              </td>
+                              <td>
+                                  <span>TextBox</span>
+                              </td>
+                              <td>
+                                  <span>Editable single- or multi-line text input.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/ToolBar.svg"
+                                      alt="ToolBar"
+                                  />
+                              </td>
+                              <td>
+                                  <span>ToolBar</span>
+                              </td>
+                              <td>
+                                  <span>Row of buttons or controls usually for app commands.</span>
+                              </td>
+                          </tr>
+                                              <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/ToolBarPanel.svg"
+                                      alt="ToolBarPanel"
+                                  />
+                              </td>
+                              <td>
+                                  <span>ToolBarPanel</span>
+                              </td>
+                              <td>
+                                  <span>Layout panel used inside a ToolBar.</span>
+                              </td>
+                          </tr>
+                      
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/ToolBarTray.svg"
+                                      alt="ToolBarTray"
+                                  />
+                              </td>
+                              <td>
+                                  <span>ToolBarTray</span>
+                              </td>
+                              <td>
+                                  <span>Container for multiple ToolBars.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/TreeView.svg"
+                                      alt="TreeView"
+                                  />
+                              </td>
+                              <td>
+                                  <span>TreeView</span>
+                              </td>
+                              <td>
+                                  <span>Displays hierarchical data (like a file system tree).</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/ViewBox.svg"
+                                      alt="ViewBox"
+                                  />
+                              </td>
+                              <td>
+                                  <span>ViewBox</span>
+                              </td>
+                              <td>
+                                  <span>Scales content proportionally to fit available space.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/ASPWebApplication.svg"
+                                      alt="ASPWebApplication"
+                                  />
+                              </td>
+                              <td>
+                                  <span>WebBrowser</span>
+                              </td>
+                              <td>
+                                  <span>Embeds a web browser to display HTML content.</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/WindowsForm.svg"
+                                      alt="WindowsForm"
+                                  />
+                              </td>
+                              <td>
+                                  <span>WindowsForm</span>
+                              </td>
+                              <td>
+                                  <span>Hosts WinForms controls in WPF (interop support).</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <img class="wpf-icon"
+                                      src="icons/WrapPanel.svg"
+                                      alt="WrapPanel"
+                                  />
+                              </td>
+                              <td>
+                                  <span>WrapPanel</span>
+                              </td>
+                              <td>
+                                  <span>Wraps child elements to the next line or column when out of space.</span>
+                              </td>
+                          </tr>
+                          <tfoot>
+                            <tr>
+                                <td colspan="3" class="credits">Icons from Visual Studio Image Library. (2022). Microsoft Store - Download Center. https://www.microsoft.com/en-us/download/details.aspx?id=35825</td>
+                            </tr>
+                        </tfoot>
+                  </tbody>
+              </table>
+            </div>
+          </section>
+          <hr class="solid">
+          <section id="ps-modules-install">
+            <h2>Installing PowerShell Modules</h2>
+            <h3>Active Directory Module</h3>
+            <p>Option 1: Use Windows Features GUI</p>
+            <ol>
+              <li>Open Control Panel &gt; Programs &gt; Turn Windows Features on or off</li>
+              <li>Expand <strong>Remote Server Administration Tools</strong></li>
+              <li>Enable:
+                <ul>
+                  <li>Active Directory Domain Services Tools</li>
+                  <li>Active Directory Lightweight Directory Services Tools</li>
+                </ul>
+              </li>
+            </ol>
+            <p>Option 2: PowerShell Command</p>
+            <div class="code-container">
+              <button class="copy-button" onclick="copyCode(this)">Copy</button>
+              <pre><code>
+  Get-WindowsCapability -Name RSAT* -Online | Add-WindowsCapability -Online
+        # Installs all RSAT capabilities (including AD tools) from Windows optional features
+              </code></pre>
+            </div>
+            <h2>For environments supporting virtual desktops.</h2>
+            <h3>PowerCLI</h3>
+            <ul>
+                <li>Open a PowerShell terminal and type:</li>
+            </ul>
+ <div class="code-container">
+              <button class="copy-button" onclick="copyCode(this)">Copy</button>
+              <pre><code>
+    Install-Module -Name VCF.PowerCLI
+        # Installs PowerCLI
+              </code></pre>
+            </div>
+            <h3>HorizonView Helper Module</h3>
+            <ul>
+                <li>Go to: <a href="https://github.com/vmware/PowerCLI-Example-Scripts/tree/master" target="_blank">https://github.com/vmware/PowerCLI-Example-Scripts/tree/master</a></li>
+                <li>Click   <img class="in-text-icon" src="icons/github_code_btn.png">  then download the zip folder from the dropdown.</li>
+                <li>To install the module for your own user
+                    <ul>
+                        <li>Open the folder, open Modules and extract VMware.Hv.Helper to: C:\Users\<YourUsername>\Documents\WindowsPowerShell\Modules</li>
+                    </ul>
+                </li>
+                <li>To install for everyone on the computer:
+                    <ul>
+                        <li>Open the folder, open Modules and extract VMware.Hv.Helper to: C:\Program Files\WindowsPowerShell\Modules</li>
+                    </ul>
+                </li>
+            </ul>
+            </section>
+            <hr class="solid">
+          <section id="start-ps-project">
                 <h2>Starting PowerShell Project in VS Code</h2>
                 <h3>Creating the Script</h3>
                 <ol>
-                  <li>Open VS Code</li>
-                  <li>Create a new file and save as <code>.ps1</code> inside your WPF project folder</li>
+                    <li>Open VS Code</li>
+                    <li>Create a new file and save as <code>.ps1</code> inside your WPF project folder</li>
                 </ol>
                 <p>At the top of the script, load the modules:</p>
                 <div class="code-container">
-                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                  <pre><code>
-                Import-Module ActiveDirectory
-                  </code></pre>
+                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    <pre><code>
+    Import-Module ActiveDirectory         # Loads the specified module
+    Import-Module VMWare.VimAutomation
+    Import-Module VMware.Hv.Helper
+                    </code></pre>
                 </div>
-                
-              </section>
+                <div class="table-toggle-header" onclick="toggleTable(this)">
+                    Show AD Cmdlets and Descriptions used
+                    <span class="dropdown-arrow">&#9660;</span>
+                </div>
+                <table class="expandable-content">
+                    <thead>
+                        <tr>
+                        <th>Cmdlet</th>
+                        <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <td>Disable-ADAccount</td>
+                        <td>Disables an Active Directory account.</td>
+                        </tr>
+                        <tr>
+                        <td>Enable-ADAccount</td>
+                        <td>Enables an Active Directory account.</td>
+                        </tr>
+                        <tr>
+                        <td>Get-ADComputer</td>
+                        <td>Gets one or more Active Directory computers.</td>
+                        </tr>
+                        <tr>
+                        <td>Get-ADDefaultDomainPasswordPolicy</td>
+                        <td>Gets the default password policy for an Active Directory domain.</td>
+                        </tr>
+                        <tr>
+                        <td>Get-ADUser</td>
+                        <td>Gets one or more Active Directory users.</td>
+                        </tr>
+                        <tr>
+                        <td>Set-ADAccountExpiration</td>
+                        <td>Sets the expiration date for an Active Directory account.</td>
+                        </tr>
+                        <tr>
+                        <td>Set-ADAccountPassword</td>
+                        <td>Modifies the password of an Active Directory account.</td>
+                        </tr>
+                        <tr>
+                        <td>Set-ADUser</td>
+                        <td>Modifies an Active Directory user.</td>
+                        </tr>
+                        <tr>
+                        <td>Unlock-ADAccount</td>
+                        <td>Unlocks an Active Directory account.</td>
+                        </tr>
+                    </tbody>
+                </table>
+          </section>
+          <section id="load-wpf-ui">
+            <h2>Loading the WPF UI in PowerShell</h2>
+            <p>Add this code to load the XAML file:</p>
+            <div class="code-container">
+              <button class="copy-button" onclick="copyCode(this)">Copy</button>
+              <pre><code>
+  Add-Type -AssemblyName PresentationFramework                      # Required to use WPF UI elements
 
-              <section id="loadxaml">
-                <h2>Loading the WPF UI in PowerShell</h2>
-                <p>Add this code to load the XAML file:</p>
-                <div class="code-container">
-                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                  <pre><code>
-                Add-Type -AssemblyName PresentationFramework
-                [xml]$MainXAML = Get-Content "Path\To\MainWindow.xaml"
-                $MainXAMLReader = New-Object System.Xml.XmlNodeReader $MainXAML
-                $MainWindow = [Windows.Markup.XamlReader]::Load($MainXAMLReader)
-                  </code></pre>
-                </div>
-              </section>
+  [xml]$MainXAML = Get-Content "Path\To\MainWindow.xaml"            # Loads the XAML UI file
+  $MainXAMLReader = New-Object System.Xml.XmlNodeReader $MainXAML   # Prepares the XML for parsing
+  $MainWindow = [Windows.Markup.XamlReader]::Load($MainXAMLReader)  # Parses and loads the WPF window
 
-              <section id="configfile">
-                <h2>Using a Config File</h2>
-                <p>Create <code>config.json</code> in your project folder:</p>
-                <div class="code-container">
-                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                  <pre><code>
-                {
-                "User_Exclusions": [],
-                "Computer_Exclusions": [],
-                "OU_Exclusions": []
-                }
-                  </code></pre>
-                </div>
-                <p>Load it in PowerShell with:</p>
-                <div class="code-container">
-                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                  <pre><code>
-                $configPath = "Path\To\config.json"
-                $config = Get-Content -Path $configPath -Raw | ConvertFrom-Json
-                  </code></pre>
-                </div>
-              </section>
-
-              <section id="controlbinding">
-                <h2>Binding Controls to Variables</h2>
-                <p>Assign a control to a variable:</p>
-                <div class="code-container">
-                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                  <pre><code>
-                $DiscoADComputer_btn = $MainWindow.FindName("DiscoADComputer_btn")
-                  </code></pre>
-                </div>
-                <p>Add event handler:</p>
-                <div class="code-container">
-                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                  <pre><code>
-                $DiscoADComputer_btn.Add_Click({
-                  $SelectedComp = $SelectedADPCName_txtbx.Text
-                  Disconnect_ActiveUser($SelectedComp)
-                })
-                  </code></pre>
-                </div>
-              </section>
-
-              <section id="functionexample">
-                <h2>Function Example: Get Active User</h2>
-                <div class="code-container">
-                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                  <pre><code>
-                function Get_ActiveUser {
-                  param([string]$ComputerName)
-                  $lines = query user /server:$ComputerName 2>$null
-                  foreach ($line in $lines) {
-                    if ($line -match '^\s*USERNAME\s+SESSIONNAME') { continue }
-                    $session_info = $line -split '\s{2,}'
-                    if ($session_info[3] -eq "Active") {
-                      return [pscustomobject]@{
-                        Name = $session_info[0].Trim()
-                        Session = $session_info[1]
-                      }
-                    }
-                  }
-                  return "No Active Session"
-                }
-                  </code></pre>
-                </div>
-              </section>
-
-              <section id="demo">
-                <h2>Demo</h2>
-                <p>Below is a sample screenshot and code block for the main UI layout and application logic:</p>
-                <p><strong>UI XAML Block</strong></p>
-                <p><strong>App.xaml Resources</strong></p>
-                <div class="code-container">
-                  <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                </div>
-
-                <p><strong>Demo Screenshots</strong></p>
-                <img src="screenshot1.png" alt="UI Screenshot" style="width:60%">
-              </section>
+              </code></pre>
             </div>
-					</div>
-				</aside>
-			</div>
-		</div>
+            <div class="code-toggle-header" onclick="toggleCode(this)">
+                    WPF MainWindow.xaml code for sample app
+                <span class="dropdown-arrow">&#9660;</span>
+            </div>
+            <div class="code-drop">
+                <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                <pre><code>
+    &lt;Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            Title="AdminTool" Height="634" SizeToContent="Width" Width="848"&gt;
+
+        &lt;Grid HorizontalAlignment="Center" Width="848"&gt;
+            &lt;DockPanel LastChildFill="True" HorizontalAlignment="Left" Width="424" Height="300" VerticalAlignment="Top"&gt;
+                &lt;DockPanel DockPanel.Dock="Top" Background="#FFDFF6FC"&gt;
+                    &lt;Label DockPanel.Dock="Left" Content="AD Computers" Height="20" FontSize="11" Padding="5,0,0,0" VerticalContentAlignment="Center" Background="{x:Null}" Width="Auto" HorizontalAlignment="Left" Margin="0,0,48,0"/&gt;
+                    &lt;Button DockPanel.Dock="Right" x:Name="RefreshComputerList_btn" Content="↻" Height="20" FontFamily="Segoe UI Light" BorderBrush="Black" BorderThickness="0.25,0.25,0.25,0.25" IsDefault="True" Width="33"/&gt;
+                    &lt;TextBox  x:Name="ADComputerSearch_txtbx" TextWrapping="Wrap" Height="20"&gt;
+                        &lt;TextBox.Style&gt;
+                            &lt;Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}"&gt;
+                                &lt;Style.Resources&gt;
+                                    &lt;VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None"&gt;
+                                        &lt;VisualBrush.Visual&gt;
+                                            &lt;Label Content="Search..." Foreground="LightGray" /&gt;
+                                        &lt;/VisualBrush.Visual&gt;
+                                    &lt;/VisualBrush&gt;
+                                &lt;/Style.Resources&gt;
+                                &lt;Style.Triggers&gt;
+                                    &lt;Trigger Property="Text" Value="{x:Static sys:String.Empty}"&gt;
+                                        &lt;Setter Property="Background" Value="{StaticResource CueBannerBrush}" /&gt;
+                                    &lt;/Trigger&gt;
+                                    &lt;Trigger Property="Text" Value="{x:Null}"&gt;
+                                        &lt;Setter Property="Background" Value="{StaticResource CueBannerBrush}" /&gt;
+                                    &lt;/Trigger&gt;
+                                    &lt;Trigger Property="IsKeyboardFocused" Value="True"&gt;
+                                        &lt;Setter Property="Background" Value="White" /&gt;
+                                    &lt;/Trigger&gt;
+                                &lt;/Style.Triggers&gt;
+                            &lt;/Style&gt;
+                        &lt;/TextBox.Style&gt;
+                    &lt;/TextBox&gt;
+                &lt;/DockPanel&gt;
+                &lt;StackPanel DockPanel.Dock="left" Height="Auto" Width="125"&gt;
+                    &lt;TextBox x:Name="SelectedADPCUser_txtbx"    TextWrapping="Wrap" Text="User" IsReadOnly="True"/&gt;
+                    &lt;TextBox x:Name="SelectedADPCName_txtbx"    TextWrapping="Wrap" Text="PC" IsReadOnly="True" Margin="0,0,0,5"/&gt;
+                    &lt;Button  Visibility="Hidden" x:Name="DiscoADComputer_btn"         VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Disconnect User"  Width="100"/&gt;
+                    &lt;Button  Visibility="Hidden" x:Name="RDPComputer_btn"             VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Remote Desktop"   Width="100"/&gt;
+                    &lt;Button  Visibility="Hidden" x:Name="RemoteAssistAD_btn"          VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Remote Assist"    Width="100"/&gt;
+                    &lt;Button  Visibility="Hidden" x:Name="ShutdownPC_btn"              VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Shutdown"         Width="100"/&gt;
+                    &lt;Button  Visibility="Hidden" x:Name="RestartPC_btn"               VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Restart"          Width="100"/&gt;
+                    &lt;Button  Visibility="Hidden" x:Name="DisableADComputer_btn"       VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Disable"          Width="100"/&gt;
+                    &lt;Button  Visibility="Hidden" x:Name="EnableADComputer_btn"        VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Enable"           Width="100"/&gt;
+                &lt;/StackPanel&gt;
+                &lt;DataGrid DockPanel.Dock="Right" x:Name="AllADComp_Dgrid" CanUserSortColumns="True" SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="True" IsReadOnly="True" IsManipulationEnabled="True" Height="Auto"/&gt;
+            &lt;/DockPanel&gt;
+            &lt;DockPanel LastChildFill="True" Width="424" Margin="0,305,0,3" HorizontalAlignment="Left"&gt;
+                &lt;DockPanel DockPanel.Dock="Top" Height="20" Background="#FFDFF6FC"&gt;
+                    &lt;Label DockPanel.Dock="Left" Content="AD Users" VerticalAlignment="Center" Height="20" FontSize="11" Padding="5,0,0,0" VerticalContentAlignment="Center" Background="#FFDFF6FC" BorderThickness="0.25,0.25,0.25,0.25" Margin="0,0,75,0"/&gt;
+                    &lt;Button DockPanel.Dock="Right" x:Name="ADUserListRefresh_btn" Content="↻" Height="Auto" Width="30"/&gt;
+                    &lt;StackPanel DockPanel.Dock="Right" x:Name="FilterPanel_stckpnl" Orientation="Horizontal" Visibility="Collapsed" Width="Auto"&gt;
+                        &lt;CheckBox x:Name="FilterADLocked_cb" Content="Locked" Height="20" VerticalContentAlignment="Center" FontSize="11" HorizontalContentAlignment="Stretch" Width="60" FlowDirection="LeftToRight"/&gt;
+                        &lt;CheckBox x:Name="FilterADExpired_cb" Content="Expired" Height="20" VerticalContentAlignment="Center" FontSize="11" HorizontalContentAlignment="Stretch" Width="60" FlowDirection="LeftToRight"/&gt;
+                        &lt;CheckBox x:Name="FilterADDisabled_cb" Content="Disabled" Height="20" VerticalContentAlignment="Center" FontSize="11" HorizontalContentAlignment="Stretch" Width="64" FlowDirection="LeftToRight" Padding="0,0,0,0"/&gt;
+                    &lt;/StackPanel&gt;
+                    &lt;Button DockPanel.Dock="Right" x:Name="FilterPanelExpand_btn" Content="Filter" Width="20" HorizontalContentAlignment="Center" FontSize="9" RenderTransformOrigin="0.5,0.5" Height="20"&gt;
+                        &lt;Button.RenderTransform&gt;
+                            &lt;TransformGroup&gt;
+                                &lt;ScaleTransform ScaleY="1"/&gt;
+                                &lt;SkewTransform/&gt;
+                                &lt;RotateTransform Angle="-90"/&gt;
+                                &lt;TranslateTransform/&gt;
+                            &lt;/TransformGroup&gt;
+                        &lt;/Button.RenderTransform&gt;
+                    &lt;/Button&gt;
+                    &lt;TextBox DockPanel.Dock="Top" x:Name="ADUserSearch_txtbx" TextWrapping="Wrap" MinWidth="80" Height="Auto" Width="Auto" &gt;
+                        &lt;TextBox.Style&gt;
+                            &lt;Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}"&gt;
+                                &lt;Style.Resources&gt;
+                                    &lt;VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None"&gt;
+                                        &lt;VisualBrush.Visual&gt;
+                                            &lt;Label Content="Search..." Foreground="LightGray" /&gt;
+                                        &lt;/VisualBrush.Visual&gt;
+                                    &lt;/VisualBrush&gt;
+                                &lt;/Style.Resources&gt;
+                                &lt;Style.Triggers&gt;
+                                    &lt;Trigger Property="Text" Value="{x:Static sys:String.Empty}"&gt;
+                                        &lt;Setter Property="Background" Value="{StaticResource CueBannerBrush}" /&gt;
+                                    &lt;/Trigger&gt;
+                                    &lt;Trigger Property="Text" Value="{x:Null}"&gt;
+                                        &lt;Setter Property="Background" Value="{StaticResource CueBannerBrush}" /&gt;
+                                    &lt;/Trigger&gt;
+                                    &lt;Trigger Property="IsKeyboardFocused" Value="True"&gt;
+                                        &lt;Setter Property="Background" Value="White" /&gt;
+                                    &lt;/Trigger&gt;
+                                &lt;/Style.Triggers&gt;
+                            &lt;/Style&gt;
+                        &lt;/TextBox.Style&gt;
+                    &lt;/TextBox&gt;
+                &lt;/DockPanel&gt;
+                &lt;StackPanel DockPanel.Dock="Left" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanHorizontallyScroll="True" CanVerticallyScroll="True" Width="125"&gt;
+                    &lt;TextBox x:Name="SelectedUser_txtbx" TextWrapping="Wrap" Text="User" IsReadOnly="True"/&gt;
+                    &lt;Button x:Name="UserUnlock_btn" Visibility="Collapsed" Content="Unlock" Height="20" Margin="0,8,0,8"/&gt;
+                    &lt;Button x:Name="UserDisable_btn" Visibility="Collapsed" Content="Disable" Height="20" Margin="0,0,0,8"/&gt;
+                    &lt;Button x:Name="UserEnable_btn" Visibility="Collapsed" Content="Enable" Height="20" Margin="0,0,0,8"/&gt;
+                    &lt;DockPanel  Visibility="Collapsed" LastChildFill="True" x:Name="PasswordOptions_dock" Width="Auto" Height="Auto" Margin="0,4,0,0"&gt;
+                        &lt;Label DockPanel.Dock="Top" Content="Password Options" Height="12" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFDFF6FC" BorderBrush="#3F0562B5" BorderThickness="0,1,0,0" FontSize="8"/&gt;
+                        &lt;Button x:Name="UserExpirePass_btn" DockPanel.Dock="Bottom" Content="Expire" Height="20" Margin="0,4,0,0"/&gt;
+                        &lt;Button DockPanel.Dock="Left" IsEnabled="False" x:Name="UserSetPass_btn" Content="Set" Width="24" Height="20"/&gt;
+                        &lt;DockPanel DockPanel.Dock="Right" Height="20" Width="24" &gt;
+                            &lt;Button DockPanel.Dock="Top" x:Name="PreviewPass_btn" Content="Show&#xA;" ToolTip="Show/Hide Password" Height="10" BorderBrush="#FFABADB3" Width="24" Foreground="#7F000000" FontSize="7" Padding="1,1,1,1" UseLayoutRounding="True"/&gt;
+                            &lt;Button DockPanel.Dock="Bottom" x:Name="CopyPass_btn" Content="Copy&#xA;" ToolTip="Copy Password" Height="10" BorderBrush="#FFABADB3" Width="24" Foreground="#7F000000" FontSize="8" Padding="1,1,1,1" UseLayoutRounding="True" Margin="0,0,0,-1"/&gt;
+                        &lt;/DockPanel&gt;
+                        &lt;PasswordBox x:Name="SetPass_txtbx" ToolTip="Set Password" Height="20"/&gt;
+                    &lt;/DockPanel&gt;
+                &lt;/StackPanel&gt;
+                &lt;DataGrid x:Name="ADUser_list" SelectionUnit="FullRow" CanUserSortColumns="True" AutoGenerateColumns="True" IsReadOnly="True" IsManipulationEnabled="True" Width="Auto" Height="Auto"/&gt;
+            &lt;/DockPanel&gt;
+            &lt;DockPanel LastChildFill="True" HorizontalAlignment="Right" Width="424" Height="300" VerticalAlignment="Top"&gt;
+                &lt;DockPanel DockPanel.Dock="Top" Background="#FFDFF6FC"&gt;
+                    &lt;Label DockPanel.Dock="Left" Content="Virtual Machines" Height="20" FontSize="11" Padding="5,0,0,0" VerticalContentAlignment="Center" Background="{x:Null}" Width="Auto" HorizontalAlignment="Left" Margin="0,0,39,0"/&gt;
+                    &lt;Button DockPanel.Dock="Right" x:Name="RefreshVMList_btn" Content="↻" Height="20" FontFamily="Segoe UI Light" BorderBrush="Black" BorderThickness="0.25,0.25,0.25,0.25" IsDefault="True" Width="33"/&gt;
+                    &lt;StackPanel DockPanel.Dock="Right" x:Name="FilterVMServ_stckpnl" Orientation="Horizontal" Visibility="Collapsed" Width="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" CanHorizontallyScroll="True" ScrollViewer.CanContentScroll="True"/&gt;
+                    &lt;Button DockPanel.Dock="Right" x:Name="FilterVMServ_btn" Content="Filter" Width="20" HorizontalContentAlignment="Center" FontSize="9" RenderTransformOrigin="0.5,0.5" Height="20"&gt;
+                        &lt;Button.RenderTransform&gt;
+                            &lt;TransformGroup&gt;
+                                &lt;ScaleTransform ScaleY="1"/&gt;
+                                &lt;SkewTransform/&gt;
+                                &lt;RotateTransform Angle="-90"/&gt;
+                                &lt;TranslateTransform/&gt;
+                            &lt;/TransformGroup&gt;
+                        &lt;/Button.RenderTransform&gt;
+                    &lt;/Button&gt;
+                    &lt;TextBox DockPanel.Dock="Top" x:Name="VMSearch_txtbx" TextWrapping="Wrap" MinWidth="119.6" Height="Auto" Width="Auto" &gt;
+                        &lt;TextBox.Style&gt;
+                            &lt;Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}"&gt;
+                                &lt;Style.Resources&gt;
+                                    &lt;VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None"&gt;
+                                        &lt;VisualBrush.Visual&gt;
+                                            &lt;Label Content="Search..." Foreground="LightGray" /&gt;
+                                        &lt;/VisualBrush.Visual&gt;
+                                    &lt;/VisualBrush&gt;
+                                &lt;/Style.Resources&gt;
+                                &lt;Style.Triggers&gt;
+                                    &lt;Trigger Property="Text" Value="{x:Static sys:String.Empty}"&gt;
+                                        &lt;Setter Property="Background" Value="{StaticResource CueBannerBrush}" /&gt;
+                                    &lt;/Trigger&gt;
+                                    &lt;Trigger Property="Text" Value="{x:Null}"&gt;
+                                        &lt;Setter Property="Background" Value="{StaticResource CueBannerBrush}" /&gt;
+                                    &lt;/Trigger&gt;
+                                    &lt;Trigger Property="IsKeyboardFocused" Value="True"&gt;
+                                        &lt;Setter Property="Background" Value="White" /&gt;
+                                    &lt;/Trigger&gt;
+                                &lt;/Style.Triggers&gt;
+                            &lt;/Style&gt;
+                        &lt;/TextBox.Style&gt;
+                    &lt;/TextBox&gt;
+                &lt;/DockPanel&gt;
+                &lt;StackPanel DockPanel.Dock="left" Height="Auto" Width="125"&gt;
+                    &lt;TextBox x:Name="ConnectedVMUser_txtbx"   TextWrapping="Wrap" Text="Connected User" IsReadOnly="True"/&gt;
+                    &lt;ComboBox x:Name="SelectedVMUser_cmbbx"     Visibility="Visible" Text="User"/&gt;
+                    &lt;ComboBox x:Name="SelectedVMName_cmbbx"     Visibility="Visible" Text="PC" Margin="0,0,0,5"/&gt;
+                    &lt;Button  x:Name="DiscoVMComputer_btn"       Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Disconnect User"  Width="100"/&gt;
+                    &lt;Button  x:Name="RemoteAssistVM_btn"        Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Remote Assist"    Width="100"/&gt;
+                    &lt;Button  x:Name="ShutdownVM_btn"            Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Shutdown"         Width="100"/&gt;
+                    &lt;Button  x:Name="RestartVM_btn"             Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Restart"          Width="100"/&gt;
+                    &lt;Button  x:Name="StartupVM_btn"             Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Startup"          Width="100"/&gt;
+                    &lt;Button  x:Name="UnassignVM_btn"            Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Unassign"         Width="100"/&gt;
+                    &lt;Button  x:Name="AssignVM_btn"              Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Assign"         Width="100"/&gt;
+                &lt;/StackPanel&gt;
+                &lt;DataGrid DockPanel.Dock="Right" x:Name="AllVMComp_Dgrid" CanUserSortColumns="True" SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="True" IsReadOnly="True" IsManipulationEnabled="True" Height="Auto"/&gt;
+            &lt;/DockPanel&gt;
+            &lt;TextBox x:Name="PassPreview_txtbx"
+                Panel.ZIndex="999"
+                Visibility="Hidden"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Margin="24,447,0,0"
+                MinWidth="77" Height="20" Width="77"/&gt;
+        &lt;/Grid&gt;
+    &lt;/Window&gt; 
+                </code></pre>
+            </div>
+            <div class="code-toggle-header" onclick="toggleCode(this)">
+                Show App.xaml code for sample app
+                <span class="dropdown-arrow">&#9660;</span>
+            </div>
+            <div class="code-drop">
+                <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                <pre><code>
+    &lt;Application x:Class="WpfApp1.App"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:local="clr-namespace:WpfApp1"
+                StartupUri="MainWindow.xaml"&gt;
+        &lt;Application.Resources&gt;
+            &lt;Style TargetType="{x:Type Button}"&gt;
+                &lt;Setter Property="Background"&gt;
+                    &lt;Setter.Value&gt;
+                        &lt;RadialGradientBrush RadiusX="1.25" RadiusY="1.25"&gt;
+                            &lt;GradientStop Color="#FFAFACAC" Offset="1"/&gt;
+                            &lt;GradientStop Color="White" Offset="0"/&gt;
+                        &lt;/RadialGradientBrush&gt;
+                    &lt;/Setter.Value&gt;
+                &lt;/Setter&gt;
+                &lt;Setter Property="Template"&gt;
+                    &lt;Setter.Value&gt;
+                        &lt;ControlTemplate TargetType="{x:Type Button}"&gt;
+                            &lt;Border Background="{TemplateBinding Background}"&gt;
+                                &lt;ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/&gt;
+                            &lt;/Border&gt;
+                        &lt;/ControlTemplate&gt;
+                    &lt;/Setter.Value&gt;
+                &lt;/Setter&gt;
+                &lt;Setter Property="BorderBrush" Value="#FF676767"/&gt;
+                &lt;Style.Triggers&gt;
+                    &lt;Trigger Property="IsMouseOver" Value="True"&gt;
+                        &lt;Setter Property="Background" Value="#FFDADADA"/&gt;
+
+                    &lt;/Trigger&gt;
+                &lt;/Style.Triggers&gt;
+            &lt;/Style&gt;
+        &lt;/Application.Resources&gt;
+    &lt;/Application&gt;
+            </code></pre>
+        </div>
+          </section>
+            <hr class="solid">
+          <section id="config-file">
+            <h2>Using a Config File</h2>
+            <p>Create <code>config.json</code> in your project folder:</p>
+            <div class="code-container">
+              <button class="copy-button" onclick="copyCode(this)">Copy</button>
+              <pre><code>
+    {
+    "VI_Servers": [],           # Store your VSphere server domains
+    "HV_Servers": [],           # Store your HorizonView server domains
+    "User_Exclusions": [],      # Users you don't want included in AD Users panel
+    "Computer_Exclusions": [],  # Computers you don't want included in AD Computers panel
+    "OU_Exclusions": []         # Organizational Units you don't want included in Computers Panel
+    }
+              </code></pre>
+            </div>
+            <p>JSON config holds lists for exclusions (users, computers, OUs)</p>
+            <p>Load it in PowerShell by adding to your script:</p>
+            <div class="code-container">
+              <button class="copy-button" onclick="copyCode(this)">Copy</button>
+              <pre><code>
+  $configPath = "Path\To\config.json"                               # File path to your config file
+  $config = Get-Content -Path $configPath -Raw | ConvertFrom-Json   # Loads and parses the JSON into a PowerShell object
+              </code></pre>
+            </div>
+          </section>
+          <hr class="solid">
+          <section id="binding-controls">
+            <h2>Binding Controls to Variables</h2>
+            <p>Assign a control to a variable:</p>
+            <div class="code-container">
+              <button class="copy-button" onclick="copyCode(this)">Copy</button>
+              <pre><code>
+  $DiscoADComputer_btn = $MainWindow.FindName("DiscoADComputer_btn")
+    # Binds the button from XAML by name so you can interact with it in script
+              </code></pre>
+              <div class="code-toggle-header" onclick="toggleCode(this)">
+                    All control bindings for sample app
+                    <span class="dropdown-arrow">&#9660;</span>
+                </div>
+                <div class="code-drop">
+                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    <pre><code>
+    $ADUser_list            = $MainWindow.FindName("ADUser_list")
+    $PassPreview_txtbx      = $MainWindow.FindName("PassPreview_txtbx")
+    $SetPass_txtbx          = $MainWindow.FindName("SetPass_txtbx")
+    $PreviewPass_btn        = $MainWindow.FindName("PreviewPass_btn")
+    $CopyPass_btn           = $MainWindow.FindName("CopyPass_btn")
+    $UserSetPass_btn        = $MainWindow.FindName("UserSetPass_btn")
+    $PasswordOptions_dock   = $MainWindow.FindName("PasswordOptions_dock")
+    $UserExpirePass_btn     = $MainWindow.FindName("UserExpirePass_btn")
+    $ADUserListRefresh_btn  = $MainWindow.FindName("ADUserListRefresh_btn")
+    $UserUnlock_btn         = $MainWindow.FindName("UserUnlock_btn")
+    $UserDisable_btn        = $MainWindow.FindName("UserDisable_btn")
+    $UserEnable_btn         = $MainWindow.FindName("UserEnable_btn")
+    $ADUserSearch_txtbx     = $MainWindow.FindName("ADUserSearch_txtbx")
+    $FilterPanelExpand_btn  = $MainWindow.FindName("FilterPanelExpand_btn")
+    $FilterPanel_stckpnl    = $MainWindow.FindName("FilterPanel_stckpnl")
+    $SelectedUser_txtbx     = $MainWindow.FindName("SelectedUser_txtbx")
+    $FilterADLocked_cb      = $MainWindow.FindName("FilterADLocked_cb")
+    $FilterADDisabled_cb    = $MainWindow.FindName("FilterADDisabled_cb")
+    $FilterADExpired_cb     = $MainWindow.FindName("FilterADExpired_cb")                                                        
+    $ADComputerSearch_txtbx = $MainWindow.FindName("ADComputerSearch_txtbx")
+    $AllADComp_Dgrid        = $MainWindow.FindName("AllADComp_Dgrid")
+    $RefreshComputerList_btn= $MainWindow.FindName("RefreshComputerList_btn")
+    $DiscoADComputer_btn    = $MainWindow.FindName("DiscoADComputer_btn")
+    $RDPComputer_btn        = $MainWindow.FindName("RDPComputer_btn")
+    $RemoteAssistAD_btn     = $MainWindow.FindName("RemoteAssistAD_btn")
+    $ShutdownPC_btn         = $MainWindow.FindName("ShutdownPC_btn")
+    $RestartPC_btn          = $MainWindow.FindName("RestartPC_btn")
+    $DisableADComputer_btn  = $MainWindow.FindName("DisableADComputer_btn")
+    $EnableADComputer_btn   = $MainWindow.FindName("EnableADComputer_btn")
+    $SelectedADPCUser_txtbx = $MainWindow.FindName("SelectedADPCUser_txtbx")
+    $SelectedADPCName_txtbx = $MainWindow.FindName("SelectedADPCName_txtbx")                                      
+    $RefreshVMList_btn      = $MainWindow.FindName("RefreshVMList_btn")
+    $AllVMComp_Dgrid        = $MainWindow.FindName("AllVMComp_Dgrid")
+    $VMSearch_txtbx         = $MainWindow.FindName("VMSearch_txtbx")
+    $SelectedVMUser_cmbbx   = $MainWindow.FindName("SelectedVMUser_cmbbx")
+    $SelectedVMName_cmbbx   = $MainWindow.FindName("SelectedVMName_cmbbx")
+    $DiscoVMComputer_btn    = $MainWindow.FindName("DiscoVMComputer_btn")
+    $RemoteAssistVM_btn     = $MainWindow.FindName("RemoteAssistVM_btn")
+    $ShutdownVM_btn         = $MainWindow.FindName("ShutdownVM_btn")
+    $RestartVM_btn          = $MainWindow.FindName("RestartVM_btn")
+    $StartupVM_btn          = $MainWindow.FindName("StartupVM_btn")
+    $UnassignVM_btn         = $MainWindow.FindName("UnassignVM_btn")
+    $AssignVM_btn           = $MainWindow.FindName("AssignVM_btn")
+    $FilterVMServ_stckpnl   = $MainWindow.FindName("FilterVMServ_stckpnl")
+    $FilterVMServ_btn       = $MainWindow.FindName("FilterVMServ_btn")
+    $ConnectedVMUser_txtbx  = $MainWindow.FindName("ConnectedVMUser_txtbx")   
+                    </code></pre>
+                </div>
+            </div>
+            <div>
+                <p>A breakdown of what is happening is our XAML file, now called <strong>MainWindow</strong> from the perspective of PowerShell, is using the built-in function from the WPF PowerShell assembly that we established first, <strong>FindName</strong>.</p>
+                <p>It is looking for the control with the name <code>DiscoADComputer_btn</code> and assigns it to a variable in PowerShell that has the same name, just with a <code>$</code> in front of it, since that is PowerShell’s convention for a variable.</p>
+                <p>You can use whatever name you want, but I simply used the same name for consistency and to know which control I am working with.</p>
+                <p>The next step is to add an event handler to our control so when we interact with the variable on the interface, it will call a series of commands.</p>
+                <p>An example of an event handler is shown below:</p>
+            </div>
+            <div class="code-container">
+              <button class="copy-button" onclick="copyCode(this)">Copy</button>
+              <pre><code>
+  $DiscoADComputer_btn.Add_Click({
+    $SelectedComp = $SelectedADPCName_txtbx.Text  # Gets the value from a textbox named "SelectedADPCName_txtbx"
+    Disconnect_ActiveUser($SelectedComp)          # Calls a custom function to disconnect the selected user
+  })
+    # Runs when the button is clicked
+              </code></pre>
+              <div class="code-toggle-header" onclick="toggleCode(this)">
+                    All event handlers for sample app
+                    <span class="dropdown-arrow">&#9660;</span>
+                </div>
+                <div class="code-drop">
+                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    <pre><code>
+    $FilterPanelExpand_btn.Add_Click({
+    switch ($FilterPanel_stckpnl.Visibility) {
+    "Collapsed" {
+        $FilterPanel_stckpnl.Visibility = "Visible"
+        $FilterPanelExpand_btn.Content   = ". . ."
+    }
+    "Visible" {
+        $FilterPanel_stckpnl.Visibility = "Collapsed"
+        $FilterPanelExpand_btn.Content   = "Filter"
+    }
+    }
+    })
+    $FilterADLocked_cb.Add_Checked({
+    Update_FilteredUserList
+    })
+    $FilterADLocked_cb.Add_Unchecked({    
+    Update_FilteredUserList
+    })
+    $FilterADExpired_cb.Add_Checked({    
+    Update_FilteredUserList
+    })
+    $FilterADExpired_cb.Add_Unchecked({    
+    Update_FilteredUserList
+    })
+    $FilterADDisabled_cb.Add_Checked({     
+    Update_FilteredUserList
+    })
+    $FilterADDisabled_cb.Add_Unchecked({     
+    Update_FilteredUserList
+    })
+    $ADUserSearch_txtbx.Add_TextChanged({
+    Search_ADUsers
+    })
+    $UserUnlock_btn.Add_Click({
+    Unlock_SelectedUser($ADUser_list.SelectedItem.SamAccountName)
+    })
+    $UserExpirePass_btn.Add_Click({
+    Expire_SelectedUser($ADUser_list.SelectedItem.SamAccountName)
+
+    })
+    $UserSetPass_btn.Add_Click({
+    if($null -eq $SetPass_txtbx.Password.Trim()){
+    [System.Windows.MessageBox]::Show("No password entered.")
+    } else {
+    Set_SelectedUserPass($ADUser_list.SelectedItem.SamAccountName)
+    }
+    })
+    $UserDisable_btn.Add_Click({
+    Disable_SelectedAccount($ADUser_list.SelectedItem.SamAccountName)
+    })
+    $UserEnable_btn.Add_Click({
+    Enable_SelectedAccount($ADUser_list.SelectedItem.SamAccountName)
+    })
+    $ADUserListRefresh_btn.Add_Click({
+    Get_ADUsers
+    Get_ADUserstatus
+    $ADUser_list.ItemsSource = $script:ADUserStatus
+    $FilterADLocked_cb.IsChecked = "False"
+    $FilterADExpired_cb.IsChecked = "False"
+    $FilterADDisabled_cb.IsChecked = "False"
+    })
+    $ADUser_list.Add_SelectionChanged({
+    $SelectedUser_txtbx.Text = $ADUser_List.SelectedItem.Name
+    })
+    $PreviewPass_btn.Add_PreviewMouseLeftButtonDown({
+    $PassPreview_txtbx.text = $SetPass_txtbx.Password
+    $SetPass_txtbx.Visibility = [System.Windows.Visibility]::Collapsed
+    $PassPreview_txtbx.Visibility = [System.Windows.Visibility]::Visible
+    $PassPreview_txtbx.Width = ($PassPreview_txtbx.Text.Length * $PassPreview_txtbx.FontSize) * 0.55
+    })
+    $PreviewPass_btn.Add_PreviewMouseLeftButtonUp({
+    $PassPreview_txtbx.Text = ""
+    $SetPass_txtbx.Visibility = [System.Windows.Visibility]::Visible
+    $PassPreview_txtbx.Visibility = [System.Windows.Visibility]::Collapsed
+    [System.Windows.Controls.Panel]::SetZIndex($PassPreview_txtbx, 0)
+    })
+    $CopyPass_btn.Add_Click({
+    $Password = $SetPass_txtbx.Password
+    [System.Windows.Clipboard]::SetText($Password)
+    })
+    $ADUser_list.Add_SelectionChanged({
+    $script:SelectedADUser = $ADUser_list.SelectedItem.SamAccountName
+    $PasswordOptions_dock.Visibility = "Visible"
+    $Enabled = (Get-ADUser -Identity $SelectedUser | Select-Object Enabled).Enabled
+    if($Enabled){
+        $UserDisable_btn.Visibility   = "Visible"
+        $UserEnable_btn.Visibility    = "Collapsed"
+    } else {
+        $UserDisable_btn.Visibility   = "Collapsed"
+        $UserEnable_btn.Visibility    = "Visible"
+    }
+    $Locked = (Get-ADUser -Identity $SelectedUser | Select-Object LockedOut).LockedOut
+    if($Locked){
+    $UserDisable_btn.Visibility   = "Visible"
+    $UserEnable_btn.Visibility    = "Collapsed"
+    } else {
+    $UserDisable_btn.Visibility   = "Collapsed"
+    $UserEnable_btn.Visibility    = "Visible"
+    }
+    })
+    $RefreshComputerList_btn.Add_Click({
+    Get_ADComputers
+    $AllADComp_Dgrid.ItemsSource = $script:ADComputers
+    })
+    $ADComputerSearch_txtbx.Add_TextChanged({
+    Search_ADComputers
+    })
+    $DiscoADComputer_btn.Add_Click({
+    Disconnect_ActiveUser -ComputerName $script:SelectedADComputer
+    })
+    $RemoteAssistAD_btn.Add_Click({
+    Send_RemAssist -ComputerName $script:SelectedADComputer
+    })
+    $ShutdownPC_btn.Add_Click({
+    Stop_Computer -ComputerName $script:SelectedADComputer
+    })
+    $RestartPC_btn.Add_Click({
+    Restart_Computer -ComputerName $script:SelectedADComputer
+    })
+    $DisableADComputer_btn.Add_Click({
+    Disable_SelectedAccount -selectedAccount $script:SelectedADComputer
+    })
+    $EnableADComputer_btn.Add_Click({
+    Enable_SelectedAccount -selectedAccount $script:SelectedADComputer
+
+    })
+
+    $AllADComp_Dgrid.Add_SelectionChanged({
+    $script:SelectedADComputer = $AllADComp_Dgrid.SelectedItem.Name
+    $SelectedADPCName_txtbx.Text = $script:SelectedADComputer
+    if($script:SelectedADComputer){
+    $ShutdownPC_btn.Visibility              = "Visible"
+    $RestartPC_btn.Visibility               = "Visible"
+    $Enabled = (Get-ADComputer -Identity $script:SelectedADComputer | Select-Object Enabled).Enabled
+    if($Enabled){
+        $DisableADComputer_btn.Visibility   = "Visible"
+        $EnableADComputer_btn.Visibility    = "Collapsed"
+    } else {
+        $DisableADComputer_btn.Visibility   = "Collapsed"
+        $EnableADComputer_btn.Visibility    = "Visible"
+    }
+    $SelectedADPCUser_txtbx.Text = (Get_ActiveUser($script:SelectedADComputer)).Name
+    if(-not $SelectedADPCUser_txtbx.Text -eq ""){
+        $DiscoADComputer_btn.Visibility     = "Visible"
+        $RemoteAssistAD_btn.Visibility      = "Visible"
+        $RDPComputer_btn.Visibiibility      = "Collapsed"
+        $RemoteAssistAD_btn.Visibility      = "Collapsed"
+        $RDPComputer_btn.Visibility         = "Visible"
+    }
+    } else {
+    $DiscoADComputer_btn.Visibility         = "Collapsed"
+    $RDPComputer_btn.Visibility             = "Collapsed"
+    $RemoteAssistAD_btn.Visibility          = "Collapsed"
+    $ShutdownPC_btn.Visibility              = "Collapsed"
+    $RestartPC_btn.Visibility               = "Collapsed"
+    $DisableADComputer_btn.Visibility       = "Collapsed"
+    $EnableADComputer_btn.Visibility        = "Collapsed"
+    }
+    })
+    $FilterVMServ_btn.Add_Click({
+    switch ($FilterVMServ_stckpnl.Visibility) {
+    "Collapsed" {
+        $FilterVMServ_stckpnl.Visibility = "Visible"
+        $FilterVMServ_btn.Content   = ". . ."
+    }
+    "Visible" {
+        $FilterVMServ_stckpnl.Visibility = "Collapsed"
+        $FilterVMServ_btn.Content   = "Filter"
+    }
+    }
+    })
+    $RefreshVMList_btn.Add_Click({
+    Connect_VIServers
+    Get_VMList
+    $script:ServerCheckBoxes = @()
+    $FilterVMServ_stckpnl.Children.Clear()
+    $AllVMComp_Dgrid.ItemsSource = $null
+    $AllVMComp_Dgrid.ItemsSource = $script:VMList
+    $script:VMList | Where-Object { $_.Server } | Select-Object -ExpandProperty Server -Unique | Sort-Object | ForEach-Object {
+    $server = $_
+    $cb = New-Object System.Windows.Controls.CheckBox
+    $cb.Content = $server
+    $cb.Tag = $server
+    $cb.MaxWidth = "45"
+
+    $cb.Add_Checked({
+        Filter_VMGrid
+    })
+    $cb.Add_Unchecked({
+        Filter_VMGrid
+    })
+    $FilterVMServ_stckpnl.Children.Add($cb) | Out-Null
+    $script:ServerCheckBoxes += $cb
+    }   
+    })
+    $AllVMComp_Dgrid.Add_SelectionChanged({
+    $script:SelectedVMUser = $AllVMComp_Dgrid.SelectedItem.SamAccountName
+    $script:SelectedVM = $AllVMComp_Dgrid.SelectedItem.MachineName
+    $script:SelectedServer = $AllVMComp_Dgrid.SelectedItem.Server
+    if ($script:SelectedVM) {
+    $vmIndex = $SelectedVMName_cmbbx.Items.IndexOf($script:SelectedVM)
+    if ($vmIndex -ge 0) { $SelectedVMName_cmbbx.SelectedIndex = $vmIndex }
+    }
+    if ($script:SelectedVMUser) {
+    $userIndex = $SelectedVMUser_cmbbx.Items.IndexOf($script:SelectedVMUser)
+    if ($userIndex -ge 0) { $SelectedVMUser_cmbbx.SelectedIndex = $userIndex }
+    }
+    $ConnectedVMUser_txtbx.Text = (Get_ActiveUser($script:SelectedVM)).Name
+
+    })
+
+    $VMSearch_txtbx.Add_TextChanged({
+    Search_VMGrid
+    })
+    $DiscoVMComputer_btn.Add_Click({
+    $script:SelectedVM
+    Disconnect_ActiveUser -SelectedComputer $script:SelectedVM
+    })
+    $RemoteAssistVM_btn.Add_Click({
+    Send_RemAssist -SelectedComputer $script:SelectedVM
+    })
+    $ShutdownVM_btn.Add_Click({
+    Stop_VM -machine $script:SelectedVM
+    })
+    $RestartVM_btn.Add_Click({
+    Restart_VM -machine $script:SelectedVM -server $script:SelectedServer
+    })
+    $StartupVM_btn.Add_Click({
+    Start_VM -machine $script:SelectedVM
+    })
+    $UnassignVM_btn.Add_Click({
+    Unassign_VM -machine $script:SelectedVM -server $script:SelectedServer
+    })
+    $AssignVM_btn.Add_Click({
+    $AssignedMachine = $SelectedVMName_cmbbx.SelectedItem
+    $AssignedUser = $SelectedVMUser_cmbbx.SelectedItem
+    $AssignedMachineServer = $script:VMList | Where-Object { $_.MachineName -like $AssignedMachine } | Select-Object Server
+    Assign_VM -machine $AssignedMachine -server $AssignedMachineServer -User $AssignedUser
+    })  
+                    </code></pre>
+                </div>
+            </div>
+            <div>
+                <p>We are calling the PowerShell variable that is now assigned to our control button and using an event handler <code>Add_Click</code>, which does exactly what it sounds like. When you add a click to the button, it will call the defined function.</p>
+                <p>The function in the example will get the text from the variable <code>$SelectedADPCName_txtbx</code> (which is assigned to another WPF control, a TextBox) and sends the text string to a function called <code>Disconnect_ActiveUser</code>.</p>
+                <p>The <code>$SelectedComp</code> variable inside the parentheses is assigned the text from the TextBox and is used as a parameter for the function.</p>
+                <p><strong>To summarize:</strong> On the click of the button, it will read the name of a selected computer from a textbox and disconnect the active user on that computer.</p>
+            </div>
+          </section>
+            <hr class="solid">
+          <section id="functions">
+            <h2>Function Example: Get Active User</h2>
+            <div class="code-container">
+              <button class="copy-button" onclick="copyCode(this)">Copy</button>
+              <pre><code>
+    function Get_ActiveUser {                               # Name of the function
+        param([string]$ComputerName)                        # Parameters to be passed into the function
+        $lines = query user /server:$ComputerName 2>$null   # Stores the query of the user sessions on target computer
+        foreach ($line in $lines) {                         # Loops each line in the query
+            if ($line -match '^\s*USERNAME\s+SESSIONNAME')  
+            {continue}                                      # Skips the column header line
+            $session_info = $line -split '\s{2,}'           # Splits the next line into a table by delimiter
+            if ($session_info[3] -eq "Active") {            # Checks if the user is the Active user
+                return [pscustomobject]@{                   # Will loop if not active user to check the next line
+                    Name = $session_info[0].Trim()          # Returns a table with columns “Name” and
+                    Session = $session_info[1]              # “Session” to the part of the script it was called
+                }
+            }
+        }
+        return "No Active Session"                          # If there is no Active user it will send this message
+    }
+              </code></pre>
+            </div>
+          </section>
+            <hr class="solid">
+          <section id="demo">
+            <h2>Demo</h2>
+            <p>Below is a sample screenshot and code block for the main UI layout and application logic:</p>
+            <p><strong>UI XAML Block</strong></p>
+            <p><strong>App.xaml Resources</strong></p>
+
+            <p><strong>Demo Screenshots</strong></p>
+           <img class="imgguide" src="screenshot1.png" alt="UI Screenshot" style="width:60%">
+          </section>
+        </div>
+      </div>
+    </div>
+
 
 		<!-- jQuery -->
 		<script src="../js/jquery.min.js"></script>
