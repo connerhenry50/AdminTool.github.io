@@ -43,7 +43,7 @@
           <li><a href="#config-file">Using a Config File</a></li>
           <li><a href="#binding-controls">Binding Controls to Variables</a></li>
           <li><a href="#functions">Function Example: Get Active User</a></li>
-          <li><a href="#demo">Demo</a></li>
+          <li><a href="#preview">Preview</a></li>
         </ol>
       </aside>
 
@@ -147,7 +147,7 @@
             </ol>
             <div class="collageguide">
                 <img class="imgguide" src="images/visualstudio_newproj.png">
-                <img class="imgguide" src="images/visualstudiodemo_create.png">
+                <img class="imgguide" src="images/visualstudiopreview_create.png">
             </div>
             <p>You can drag controls into the design pane or edit them in the XAML window. Each control has a name (x:Name) for PowerShell to reference.</p>
             <div class="code-container">
@@ -1542,7 +1542,9 @@
           </section>
             <hr class="solid">
           <section id="functions">
-            <h2>Function Example: Get Active User</h2>
+            <h2>Functions</h2>
+            <p>To use code repetitively, we call on functions. Functions are considered “black boxes” in the sense that they have a single input and output, and the code that it performs is contained and doesn’t require us knowing how it works to use it. The example below shows the “Get Active User” function and from the first two lines we can interpret it takes a computer name and gets the active user logged into it. We use a “Return” statement to end the function and return the value after the calculations have been performed. This instruction does not cover the PowerShell programming commands, but there are notes in the example that describe the step-by-step actions being performed.</p>
+            <h3>Function Example: Get Active User</h3>
             <div class="code-container">
               <button class="copy-button" onclick="copyCode(this)">Copy</button>
               <pre><code>
@@ -1563,17 +1565,437 @@
         return "No Active Session"                          # If there is no Active user it will send this message
     }
               </code></pre>
+            <div class="code-toggle-header" onclick="toggleCode(this)">
+                Show all functions for sample app
+                <span class="dropdown-arrow">&#9660;</span>
             </div>
+            <div class="code-drop">
+                <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                <pre><code>
+    function Get_Credentials {
+        try {
+            if (-not $script:admin.password -or -not $script:admin.username){
+                $credential = Get-Credential
+                $script:admin = [pscustomobject]@{
+                    username = $credential.UserName
+                    password = (New-Object PSCredential 0, $credential.Password).GetNetworkCredential().Password
+                }
+            }
+        }
+        catch {}
+    }
+    function Confirm_Action {
+        param([string]$Title,[string]$Message)
+        $confirmation = [System.Windows.MessageBox]::Show(
+            $Message,
+            $Title,
+            [System.Windows.MessageBoxButton]::YesNo,
+            [System.Windows.MessageBoxImage]::Question
+        )
+        return $confirmation
+    }
+    function Get_ADUsers {  
+        $UserExclusions = $config.User_Exclusions
+
+        $script:ADUsers = Get-ADUser -Filter * -Properties * |
+            Where-Object {
+                $_.SamAccountName -notin $UserExclusions
+            }
+    }
+    function Get_ADUserstatus {
+        $now = Get-Date
+        $ADUserStatusList = $script:ADUsers | ForEach-Object {
+            $statusList = @()
+            if ($_.LockedOut) { $statusList += "Locked" }
+            if (-not $_.Enabled) { $statusList += "Disabled" }
+            if ($_.AccountExpirationDate -and $_.AccountExpirationDate -lt $now) { $statusList += "Expired" }
+            if ($_.PasswordExpired) { $statusList += "PasswordExpired" }
+
+            [PSCustomObject]@{
+                Name = $_.Name
+                Status = $statusList -join ", "
+                SamAccountName = $_.SamAccountName
+            }
+        }
+        $script:ADUserStatus = [System.Windows.Data.CollectionViewSource]::GetDefaultView(@($ADUserStatusList))
+    }
+    function Search_ADUsers {
+        $searchText = $ADUserSearch_txtbx.Text.Trim().ToLower()
+        $filteredSource = $script:ADUserStatus | Where-Object {
+            if (-not [string]::IsNullOrWhiteSpace($searchText)) {
+                $fields = @($_.Name, $_.Status, $_.SamAccountName)
+                return $fields | Where-Object { $_ -and $_.ToString().ToLower().Contains($searchText) }
+            }
+            return $true
+        }
+
+        $ADUser_list.ItemsSource = [System.Windows.Data.CollectionViewSource]::GetDefaultView(@($filteredSource))
+    }
+    function Unlock_SelectedUser {
+        param ([string]$selectedUser)
+            Unlock-ADAccount -Identity $selectedUser
+            [System.Windows.MessageBox]::Show("$selectedUser Unlocked")
+    }
+    function Expire_SelectedUser {
+        param ([string]$selectedUser)
+        $confirm = Confirm_Action -Title "Expire Password?" -Message "Are you sure you want to expire the password for '$($selectedUser.Name)'?"
+
+        if ($confirm -eq "Yes") {
+            Set-ADUser -Identity $selectedUser -ChangePasswordAtLogon $true
+            [System.Windows.MessageBox]::Show("Password for $($selectedUser.Name) set to expire at next logon.")
+        }
+    }
+    function Disable_SelectedAccount {
+        param ([string]$selectedAccount)
+        $confirm = Confirm_Action -Title "Disable Account?" -Message "Are you sure you want to disable '$($selectedAccount)'?"
+        if ($confirm -eq "Yes") {
+            Disable-ADAccount -Identity $SelectedAccount
+            [System.Windows.MessageBox]::Show("$SelectedAccount set to disabled.")
+        }
+    }
+    function Enable_SelectedAccount {
+        param ([string]$selectedAccount)
+        $confirm = Confirm_Action -Title "Enable Account?" -Message "Are you sure you want to enable '$($selectedAccount)'?"
+        if ($confirm -eq "Yes") {
+            Enable-ADAccount -Identity $SelectedAccount
+            [System.Windows.MessageBox]::Show("$SelectedAccount set to enabled.")
+        }
+    }
+    function Set_SelectedUserPass {
+        param ([string]$SelectedUser)
+        $password = $SetPass_txtbx.Password
+        $confirm = Confirm_Action -Title "Reset Password?" -Message "Reset password for '$($SelectedUser)'?"
+
+        if ($confirm -eq "Yes") {
+            Set-ADAccountPassword -Identity $SelectedUser -Reset -NewPassword (ConvertTo-SecureString $password -AsPlainText -Force)
+            [System.Windows.MessageBox]::Show("Password for $(SelectedUser) has been reset. Make sure to expire if you want to change it at next logon.")
+        }
+    }
+    function Update_FilteredUserList {
+        $showLocked   = $FilterADLocked_cb.IsChecked
+        $showExpired  = $FilterADExpired_cb.IsChecked
+        $showDisabled = $FilterADDisabled_cb.IsChecked
+        if (-not ($showLocked -or $showExpired -or $showDisabled)) {
+            $ADUser_list.ItemsSource = $script:ADUserStatus
+            return
+        }
+        $filtered = $script:ADUserStatus | Where-Object {
+            ($showLocked   -and $_.Status -Like '*Locked*')   -or
+            ($showExpired  -and $_.Status -Like '*Expired*')  -or
+            ($showDisabled -and $_.Status -Like '*Disabled*')
+        }
+        $ADUser_list.ItemsSource = [System.Windows.Data.CollectionViewSource]::GetDefaultView(@($filtered))
+    }
+    function Get_ADComputers {
+        $ComputerExclusions = $config.Computer_Exclusions
+        $OUExclusions = $config.OU_Exclusions
+        
+        $ADComputerList = Get-ADComputer -Filter * -Properties IPv4Address, OperatingSystem, Description, DistinguishedName |
+            Where-Object {
+                $_.Name -and ($_.Name -notin $ComputerExclusions)
+            } | ForEach-Object {
+                $OUs = ($_.DistinguishedName -split ',') |
+                    Where-Object { $_ -like 'OU=*' } |
+                    ForEach-Object { $_ -replace '^OU=' } |
+                    Where-Object { $_ -and ($_ -notin $OUExclusions) }
+
+                [pscustomobject]@{
+                    Name             = $_.Name
+                    IPv4Address      = $_.IPv4Address
+                    OperatingSystem  = $_.OperatingSystem
+                    Description      = $_.Description
+                    OU               = $OUs -join "`n"
+                }
+            }
+        $script:ADComputers = [System.Windows.Data.CollectionViewSource]::GetDefaultView(@($ADComputerList))
+    }
+    function Search_ADComputers {
+        $searchText = $ADComputerSearch_txtbx.Text.Trim().ToLower()
+
+        if (-not [string]::IsNullOrWhiteSpace($searchText)) {
+            $filteredSource = $script:ADComputers | Where-Object {
+                ($_.Name -and $_.Name.ToString().ToLower().Contains($searchText)) -or
+                ($_.IPv4Address -and $_.IPv4Address.ToString().ToLower().Contains($searchText)) -or
+                ($_.OperatingSystem -and $_.OperatingSystem.ToString().ToLower().Contains($searchText)) -or
+                ($_.Description -and $_.Description.ToString().ToLower().Contains($searchText)) -or
+                ($_.OU -and $_.OU.ToString().ToLower().Contains($searchText))
+            }
+        } else {
+            $filteredSource = $script:ADComputers
+        }
+        $AllADComp_Dgrid.ItemsSource = [System.Windows.Data.CollectionViewSource]::GetDefaultView(@($filteredSource))
+    }
+    function Get_ActiveUser {
+        param([string]$ComputerName)
+
+        $lines = query user /server:$ComputerName 2>$null
+        foreach ($line in $lines) {
+            if ($line -match '^\s*USERNAME\s+SESSIONNAME') { continue }
+                $parts = $line -split '\s{2,}'
+                if ($parts[3] -eq "Active") {
+                    return  [pscustomobject]@{
+                        Name = $parts[0].Trim()
+                        Session = $parts[1]
+                    }
+                }
+        } return "No Active Session"
+    }
+    function Disconnect_ActiveUser {
+        param ([string]$SelectedComputer)
+        $Session = (Get_ActiveUser($SelectedComputer)).Session
+        logoff $Session /server:$SelectedComputer
+    }
+    function Send_RemAssist {
+        param ([string]$SelectedComputer)
+        msra /offerra $SelectedComputer
+    $logPath = "V:\RemoteAssist\remote assistance log.txt"
+        $logLine = "$env:USERNAME, $SelectedComputer, $(Get-Date -Format 'HH:mm:ss.ff'), $(Get-Date -Format 'ddd MM/dd/yyyy')"
+        Add-Content -Path $logPath -Value $logLine 
+    }
+    function Connect_VIServers {
+        Write-Host "Connecting to VIServers"
+        if(-not $serverlist -eq $null){Disconnect-VIServer * -Confirm:$false}
+        foreach ($viServer in $vi_servers) {
+            try {
+                $connectedServer = Connect-VIServer $viServer -UserName $admin.username -Password $admin.password -ErrorAction Stop
+                if ($connectedServer) {
+                    Write-Host "Credentials checked, successful permissions."
+                    return  
+                }
+            }
+            catch {
+                Write-Warning "Failed to connect to $viServer. Check your entered credentials and make sure you have permissions for access."
+                pause
+                break
+            }
+        }
+        Write-Error "Could not connect to any vCenter server. Exiting..."
+        exit
+    }
+    function Get_VMEntitled {
+        $entitledUsers = @()
+        foreach ($server in $hv_servers) {
+            Connect-HVServer -Server $server -UserName $admin.username -Password $admin.password | Out-Null
+            $pools = Get-HVPool -ErrorAction SilentlyContinue
+            foreach ($pool in $pools) {
+                $poolName = $pool.base.name
+                try {
+                    $poolEntitlements = Get-HVEntitlement -ResourceType Desktop -ResourceName $poolName -ErrorAction SilentlyContinue
+                    foreach ($ent in $poolEntitlements) {
+                        $entitledUsers += $ent.base.loginname
+                    }
+                } catch {}
+            }
+            Disconnect-HVServer -Server $server -Confirm:$false   
+        }
+        return $entitledUsers | Select -Unique
+    }
+    function Filter_VMGrid {
+        $SelectedServers = $script:ServerCheckBoxes | Where-Object { $_.IsChecked -eq $true } | ForEach-Object { $_.Tag }
+        $filtered = $script:VMList | Where-Object {
+            if ($SelectedServers.Count -gt 0) {
+                return $SelectedServers -contains $_.Server
+            }
+            return $true
+        }
+        $AllVMComp_Dgrid.ItemsSource = [System.Windows.Data.CollectionViewSource]::GetDefaultView(@($filtered))
+    }
+    function Search_VMGrid {
+        $searchText = $VMSearch_txtbx.Text.Trim().ToLower()
+        $filteredSource = $script:VMList | Where-Object {
+            if (-not [string]::IsNullOrWhiteSpace($searchText)) {
+                $fields = @($_.MachineName, $_.DisplayName, $_.SamAccountName, $_.Server)
+                return $fields | Where-Object { $_ -and $_.ToString().ToLower().Contains($searchText) }
+            }
+            return $true
+        }
+        $AllVMComp_Dgrid.ItemsSource = [System.Windows.Data.CollectionViewSource]::GetDefaultView(@($filteredSource))
+    }
+    function Get_VMList {
+        Get_Credentials
+        if (-not $script:admin.password -or -not $script:admin.username){
+            return
+        }
+        Get_ADUsers
+        $script:VMList = @()
+        foreach ($server in $hv_servers) {
+            try {
+                $connectedServer = Connect-HVServer $server -UserName $admin.username -Password $admin.password | Out-Null
+                if ($connectedServer) {
+                }
+            }
+            catch {
+                continue
+            }
+            $machineSummaries = Get-HVMachineSummary
+            foreach ($summary in $machineSummaries) {
+                $machineName = $summary.base.Name
+                if ($summary.namesdata -and $summary.namesdata.Count -gt 0) {
+                    foreach ($userEntry in $summary.namesdata) {
+                        $fullUsername = $userEntry.Username
+
+                        if ($fullUsername) {
+                            $SamAccount = $fullUsername.Split('\')[1]
+                            $ADUser = Get-ADUser -Filter { SamAccountName -eq $SamAccount } -Properties DisplayName, SamAccountName
+                            $script:VMList += [PSCustomObject]@{
+                                MachineName    = $machineName
+                                DisplayName    = if ($ADUser) { $ADUser.DisplayName } else { "Not Assigned" }
+                                SamAccountName = if ($ADUser) { $ADUser.SamAccountName } else { $SamAccount }
+                                Server         = $server  
+                            }
+                        }
+                        else {
+                            $script:VMList += [PSCustomObject]@{
+                                DisplayName    = "Not Assigned"
+                                SamAccountName = "NA"
+                                MachineName    = $machineName
+                                Server         = $server
+                            }
+                        }
+                    }
+                }
+                else {
+                    $script:VMList += [PSCustomObject]@{
+                        DisplayName    = "Not Assigned"
+                        SamAccountName = "NA"
+                        MachineName    = $machineName
+                        Server         = $server
+                    }
+                }
+            }
+            Disconnect-HVServer * -Confirm:$false
+        }
+        $NotAssignedEntitled = Get_VMEntitled | Where-Object {
+            $_ -notin $script:VMList.SamAccountName
+        }
+        foreach ($SamAccount in $NotAssignedEntitled) {
+            $DisplayName = $script:ADUsers | Where-Object { $_.SamAccountName -eq $SamAccount }
+            $script:VMList += [PSCustomObject]@{
+                DisplayName     = $DisplayName.DisplayName
+                SamAccountName  = $SamAccount
+                MachineName     = "Not Assigned"
+                Server          = "NA"
+            }
+        }
+        $SelectedVMUser_cmbbx.Items.Clear()
+        $SelectedVMName_cmbbx.Items.Clear()
+        $allUsers = $script:VMList |
+            Where-Object { $null -ne $_.SamAccountName -and $_.SamAccountName -ne "" -and $_.SamAccountName -ne "NA" } |
+            Select-Object -ExpandProperty SamAccountName -Unique |
+            Sort-Object
+
+        foreach ($user in $allUsers) {
+            $SelectedVMUser_cmbbx.Items.Add($user)
+        }
+        $allMachines = $script:VMList |
+            Where-Object {$null -ne $_.MachineName -and $_.MachineName -ne "" -and $_.MachineName -ne "Not Assigned" } |
+            Select-Object -ExpandProperty MachineName -Unique |
+            Sort-Object
+
+        foreach ($vm in $allMachines) {
+            $SelectedVMName_cmbbx.Items.Add($vm)
+        }
+    }
+    function Start_VM {
+        param([string]$machine)
+        Start-VM -VM $machine -Confirm:$false
+    }
+    function Stop_VM {
+        param([string]$machine)
+        Stop-VM -VM $machine -confirm:$false
+    }
+    function Get_State {
+        param($machine)
+        return Get-HVMachineSummary -MachineName $machine | Select-Object -ExpandProperty Base | Select-Object -ExpandProperty BasicState
+    }
+    function Restart_VM {
+        param([string]$machine,[string]$server)
+        Connect-HVServer $server -UserName $admin.username -Password $admin.password
+        $Status = Get_State -machine $machine
+        if($Status -notlike "UNAVAILABLE" -or $Status -notlike "AGENT_UNREACHABLE"){
+            Restart-HVMachine -MachineName $machine -Confirm:$false
+        } Else {
+            Start_VM($machine)
+            return
+        }
+
+        while ($Status -notlike "AVAILABLE") {
+            $Status = Get_State -machine $machine
+            Clear-Host
+            Write-Host("Waiting for Unavailable, currently: $Status") -NoNewline
+            Start-Sleep -Milliseconds 2000
+        }
+        while ($Status -notlike "AGENT_UNREACHABLE") {
+            $Status = Get_State -machine $machine
+            Clear-Host
+            Write-Host("Waiting for Available, currently: $Status") -NoNewline
+            Start-Sleep -Milliseconds 2000
+        }
+        Write-Host("Done")
+        Disconnect-HVServer * -Confirm:$false
+    }
+    function Unassign_VM {
+        param ([string]$machine, [string]$server)
+        $connection = Connect-HVServer -Server $server -UserName $admin.username -Password $admin.password
+        $services1=$connection.extensiondata
+        $machineid=(get-hvmachine -machinename $machine).id
+        $machineservice=new-object vmware.hv.machineservice
+        $machineinfohelper=$machineservice.read($services1, $machineid)
+        $machineinfohelper.getbasehelper().setuser($null)
+        $machineservice.update($services1, $machineinfohelper)
+        Disconnect-HVServer * -Confirm:$false
+    }
+    function Assign_VM {
+        param([string]$machine,[string]$user, [string]$server)
+        get-hvmachine -MachineName $machine -HvServer $script:SelectedVMServer $machine | Set-HVMachine -User $hv_servers[0].Substring($hv_servers[0].IndexOf("."))+"\"+$user
+    }
+                </code></pre>
+            </div>
+            </div>
+            
+          </section>
+          <hr class="solid">
+          <section id="finaltouches">
+            <h2>Final Touches</h2>
+            <p>Before we are finished, in our PowerShell script we will need to actually tell the script to open the interface window with all our elements loaded into it.</p>
+            <p>This requires adding this code to the bottom of your script so it gets called last, after everything else has been loaded into memory.</p>
+            <pre><code>
+    $MainWindow.Add_Closing({
+        try{
+            Disconnect-VIServer * -Confirm:$false
+        } catch{continue}
+        
+        close
+    })
+
+    $MainWindow.ShowDialog() | Out-Null
+            </code></pre>
+            <p>This code does a little more than open the window, however. Simply put, when closing the interface, it will disconnect any VSphere server connections and close the terminal window that is open in the background running our script.</p>
+            <p>The final line is the most important part, it tells PowerShell to open the window and display our interface.</p>
+            <p>To launch the app, you can run the PowerShell file (.ps1) through a Command Prompt terminal or PowerShell terminal.</p>
+            <p>If using Command Prompt, type <code>PowerShell</code> then the <code>path</code> to your file.</p>
+            <img class="imgguide" src="images/launching_cmd.png">
+            <p>If using PowerShell, simply typing the path to the file will launch it.</p>
+            <p>To make it more simple and streamlined, you can create a shortcut to launch the script that opens the app.</p>
+            <p>To create a shortcut, <strong>Right-click</strong> inside a folder, click <strong>New Shortcut</strong>.</p>
+            <div class="collageguide">
+                <img src="images/CreatingShortcut_1.png">
+                <img src="images/CreatingShortcut_2.png">
+            </div>
+            <p>For the location, enter C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Noexit -windowstyle hidden -File "the\path\to\your\.ps1"</p>
+            <img class="imgguide" src="images/CreatingShortcut_3.png">
+            <p>This will launch the script using PowerShell and minimize the terminal window since it will show the UI.</p>
           </section>
             <hr class="solid">
-          <section id="demo">
-            <h2>Demo</h2>
-            <p>Below is a sample screenshot and code block for the main UI layout and application logic:</p>
-            <p><strong>UI XAML Block</strong></p>
-            <p><strong>App.xaml Resources</strong></p>
-
-            <p><strong>Demo Screenshots</strong></p>
-           <img class="imgguide" src="screenshot1.png" alt="UI Screenshot" style="width:60%">
+          <section id="preview">
+            <h2>Previews</h2>
+            <img class="imgguide img-border" src="images/preview_all.png">
+            <p>This preview is the file explorer of the App project.</p>
+            <p>Files in <strong>RED</strong> will need to be created.</p>
+            <p>Other files will be automatically created when creating the WPF project in Visual Studio 2022</p>
+            <p>Files in <strong>BLUE</strong> will need to be edited</p>
+            <img class="imgguide" src="images/FileExplorerPreview.png">
+            
           </section>
         </div>
       </div>
@@ -1590,8 +2012,6 @@
 		<script src="../js/jquery.waypoints.min.js"></script>
 		<!-- Flexslider -->
 		<script src="../js/jquery.flexslider-min.js"></script>
-
-		<script src="../../demos/demoscript.js"></script>
 		<!-- MAIN JS -->
 		<script src="../js/main.js"></script>
   
