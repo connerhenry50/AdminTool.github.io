@@ -37,15 +37,19 @@ td {
   margin-left: 10%;
   margin-top: 1em;
   margin-bottom: 1em;
-  width: 60%;
+  max-width: 60%;
+}
+.img-border {
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.5);
 }
 .collageguide {
   display: flex;
   width: 60%;
 }
 .collageguide > img {
-  flex: 1 1 50%;
-  height: 100%;
+  flex: 0 0 50%;
+  height: 80%;
   object-fit: cover;
 }
 .table-toggle-header {
@@ -404,7 +408,6 @@ pre {
 }
 #hero {
   min-height: 300px;
-  background: #fff url(../images/loader.gif) no-repeat center center;
   width: 100%;
   float: left;
   overflow: auto;
@@ -683,10 +686,15 @@ body.offcanvas .nav-toggle {
 }
 @media screen and (max-width: 768px) {
   .imgguide {
-    width: 90%;
+    max-width: 90%;
   }
   .cards {
     padding: 1em 0;
+  }
+  .collageguide {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100px;
   }
 }
 .cards .flex-wrap {
