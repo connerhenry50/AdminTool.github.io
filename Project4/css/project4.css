@@ -8,6 +8,8 @@
   }
   li>p{
     margin-left: -48px;
+    word-wrap: break-word;
   }
 
 }
+
