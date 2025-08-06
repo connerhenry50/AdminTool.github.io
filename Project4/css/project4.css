@@ -3,13 +3,13 @@
     display: none;
   }
   .projpage {
-    margin-left: 32px;
-    margin-right: 16px;
+    margin-left: 2em;
+    margin-right: 1em;
   }
   li>p{
-    margin-left: -48px;
-    word-wrap: break-word;
+    margin-left: -3em;
   }
 
 }
+
 
