@@ -1237,10 +1237,6 @@ strong {
   -o-transition: 0.5s;
   transition: 0.5s;
 }
-@media screen and (max-width: 768px) {
-.nav-toggle {
-  visibility: hidden;
-}
 }
 #contentbar {
   padding-bottom: 40px;
