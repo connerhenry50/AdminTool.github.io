@@ -6,11 +6,12 @@
     margin-left: 2em;
     margin-right: 1em;
   }
-  li>p{
+  li > p{
     word-wrap: break-word;
   }
 
 }
+
 
 
 
