@@ -1972,7 +1972,7 @@
             Disconnect-VIServer * -Confirm:$false
         } catch{continue}
         
-        close
+        exit
     })
 
     $MainWindow.ShowDialog() | Out-Null
