@@ -37,14 +37,15 @@
             <StackPanel DockPanel.Dock="left" Height="Auto" Width="125">
                 <TextBox x:Name="SelectedADPCUser_txtbx"    TextWrapping="Wrap" Text="User" IsReadOnly="True"/>
                 <TextBox x:Name="SelectedADPCName_txtbx"    TextWrapping="Wrap" Text="PC" IsReadOnly="True" Margin="0,0,0,5"/>
-                <Button  Visibility="Hidden" x:Name="DiscoADComputer_btn"         VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Disconnect User"  Width="100"/>
-                <Button  Visibility="Hidden" x:Name="RDPComputer_btn"             VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Remote Desktop"   Width="100"/>
-                <Button  Visibility="Hidden" x:Name="RemoteAssistAD_btn"          VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Remote Assist"    Width="100"/>
-                <Button  Visibility="Hidden" x:Name="ShutdownPC_btn"              VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Shutdown"         Width="100"/>
-                <Button  Visibility="Hidden" x:Name="RestartPC_btn"               VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Restart"          Width="100"/>
-                <Button  Visibility="Hidden" x:Name="DisableADComputer_btn"       VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Disable"          Width="100"/>
-                <Button  Visibility="Hidden" x:Name="EnableADComputer_btn"        VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Enable"           Width="100"/>
+                <Button  Visibility="Collapsed" x:Name="DiscoADComputer_btn"         VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Disconnect User"  Width="100"/>
+                <Button  Visibility="Collapsed" x:Name="RDPComputer_btn"             VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Remote Desktop"   Width="100"/>
+                <Button  Visibility="Collapsed" x:Name="RemoteAssistAD_btn"          VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Remote Assist"    Width="100"/>
+                <Button  Visibility="Collapsed" x:Name="ShutdownPC_btn"              VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Shutdown"         Width="100"/>
+                <Button  Visibility="Collapsed" x:Name="RestartPC_btn"               VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Restart"          Width="100"/>
+                <Button  Visibility="Collapsed" x:Name="DisableADComputer_btn"       VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Disable"          Width="100"/>
+                <Button  Visibility="Collapsed" x:Name="EnableADComputer_btn"        VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Enable"           Width="100"/>
             </StackPanel>
+            <CheckBox Visibility="Collapsed" x:Name="RA_btn_visibility_override" ToolTip="Enables Remote Assist regardless of if there is a user available. &#10;Used in instances where query for active user has insufficient permissions or unable to find active user." DockPanel.Dock="Left" Content="No Active User RA" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-124,0,0,0"/>
             <DataGrid DockPanel.Dock="Right" x:Name="AllADComp_Dgrid" CanUserSortColumns="True" SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="True" IsReadOnly="True" IsManipulationEnabled="True" Height="Auto"/>
         </DockPanel>
         <DockPanel LastChildFill="True" Width="424" Margin="0,305,0,3" HorizontalAlignment="Left">
@@ -92,14 +93,14 @@
                 </TextBox>
             </DockPanel>
             <StackPanel DockPanel.Dock="Left" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanHorizontallyScroll="True" CanVerticallyScroll="True" Width="125">
-                <TextBox x:Name="SelectedUser_txtbx" TextWrapping="Wrap" Text="User" IsReadOnly="True"/>
-                <Button x:Name="UserUnlock_btn" Visibility="Collapsed" Content="Unlock" Height="20" Margin="0,8,0,8"/>
-                <Button x:Name="UserDisable_btn" Visibility="Collapsed" Content="Disable" Height="20" Margin="0,0,0,8"/>
-                <Button x:Name="UserEnable_btn" Visibility="Collapsed" Content="Enable" Height="20" Margin="0,0,0,8"/>
-                <DockPanel  Visibility="Collapsed" LastChildFill="True" x:Name="PasswordOptions_dock" Width="Auto" Height="Auto" Margin="0,4,0,0">
+                <TextBox    x:Name="SelectedUser_txtbx" TextWrapping="Wrap" Text="User" IsReadOnly="True"/>
+                <Button     x:Name="UserUnlock_btn"         Visibility="Collapsed" Content="Unlock" Height="20" Margin="0,8,0,8"/>
+                <Button     x:Name="UserDisable_btn"        Visibility="Collapsed" Content="Disable" Height="20" Margin="0,0,0,8"/>
+                <Button     x:Name="UserEnable_btn"         Visibility="Collapsed" Content="Enable" Height="20" Margin="0,0,0,8"/>
+                <DockPanel  x:Name="PasswordOptions_dock"   Visibility="Collapsed" LastChildFill="True"  Width="Auto" Height="Auto" Margin="0,4,0,0">
                     <Label DockPanel.Dock="Top" Content="Password Options" Height="12" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFDFF6FC" BorderBrush="#3F0562B5" BorderThickness="0,1,0,0" FontSize="8"/>
                     <Button x:Name="UserExpirePass_btn" DockPanel.Dock="Bottom" Content="Expire" Height="20" Margin="0,4,0,0"/>
-                    <Button DockPanel.Dock="Left" IsEnabled="False" x:Name="UserSetPass_btn" Content="Set" Width="24" Height="20"/>
+                    <Button x:Name="UserSetPass_btn"    DockPanel.Dock="Left"   Content="Set" IsEnabled="False" Width="24" Height="20"/>
                     <DockPanel DockPanel.Dock="Right" Height="20" Width="24" >
                         <Button DockPanel.Dock="Top" x:Name="PreviewPass_btn" Content="Show&#xA;" ToolTip="Show/Hide Password" Height="10" BorderBrush="#FFABADB3" Width="24" Foreground="#7F000000" FontSize="7" Padding="1,1,1,1" UseLayoutRounding="True"/>
                         <Button DockPanel.Dock="Bottom" x:Name="CopyPass_btn" Content="Copy&#xA;" ToolTip="Copy Password" Height="10" BorderBrush="#FFABADB3" Width="24" Foreground="#7F000000" FontSize="8" Padding="1,1,1,1" UseLayoutRounding="True" Margin="0,0,0,-1"/>
@@ -150,22 +151,22 @@
                 </TextBox>
             </DockPanel>
             <StackPanel DockPanel.Dock="left" Height="Auto" Width="125">
-                <TextBox x:Name="ConnectedVMUser_txtbx"   TextWrapping="Wrap" Text="Connected User" IsReadOnly="True"/>
+                <TextBox x:Name="ConnectedVMUser_txtbx"   TextWrapping="Wrap" Text="" IsReadOnly="True"/>
                 <ComboBox x:Name="SelectedVMUser_cmbbx"     Visibility="Visible" Text="User"/>
                 <ComboBox x:Name="SelectedVMName_cmbbx"     Visibility="Visible" Text="PC" Margin="0,0,0,5"/>
-                <Button  x:Name="DiscoVMComputer_btn"       Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Disconnect User"  Width="100"/>
-                <Button  x:Name="RemoteAssistVM_btn"        Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Remote Assist"    Width="100"/>
-                <Button  x:Name="ShutdownVM_btn"            Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Shutdown"         Width="100"/>
-                <Button  x:Name="RestartVM_btn"             Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Restart"          Width="100"/>
-                <Button  x:Name="StartupVM_btn"             Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Startup"          Width="100"/>
-                <Button  x:Name="UnassignVM_btn"            Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Unassign"         Width="100"/>
-                <Button  x:Name="AssignVM_btn"              Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Assign"         Width="100"/>
+                <Button  x:Name="DiscoVMComputer_btn"       Visibility="Collapsed"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Disconnect User"  Width="100"/>
+                <Button  x:Name="RemoteAssistVM_btn"        Visibility="Collapsed"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Remote Assist"    Width="100"/>
+                <Button  x:Name="ShutdownVM_btn"            Visibility="Collapsed"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Shutdown"         Width="100"/>
+                <Button  x:Name="RestartVM_btn"             Visibility="Collapsed"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Restart"          Width="100"/>
+                <Button  x:Name="StartupVM_btn"             Visibility="Collapsed"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Startup"          Width="100"/>
+                <Button  x:Name="UnassignVM_btn"            Visibility="Collapsed"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Unassign"         Width="100"/>
+                <Button  x:Name="AssignVM_btn"              Visibility="Collapsed"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Assign"         Width="100"/>
             </StackPanel>
             <DataGrid DockPanel.Dock="Right" x:Name="AllVMComp_Dgrid" CanUserSortColumns="True" SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="True" IsReadOnly="True" IsManipulationEnabled="True" Height="Auto"/>
         </DockPanel>
         <TextBox x:Name="PassPreview_txtbx"
              Panel.ZIndex="999"
-             Visibility="Hidden"
+             Visibility="Collapsed"
              VerticalAlignment="Top"
              HorizontalAlignment="Left"
              Margin="24,447,0,0"

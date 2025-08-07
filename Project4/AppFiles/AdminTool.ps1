@@ -230,7 +230,7 @@ $CopyPass_btn.Add_Click({
 $ADUser_list.Add_SelectionChanged({
     $script:SelectedADUser = $ADUser_list.SelectedItem.SamAccountName
     $PasswordOptions_dock.Visibility = "Visible"
-    $Enabled = (Get-ADUser -Identity $SelectedUser | Select-Object Enabled).Enabled
+    $Enabled = (Get-ADUser -Identity $script:SelectedADUser -Properties Enabled).Enabled
         if($Enabled){
             $UserDisable_btn.Visibility   = "Visible"
             $UserEnable_btn.Visibility    = "Collapsed"
@@ -238,28 +238,27 @@ $ADUser_list.Add_SelectionChanged({
             $UserDisable_btn.Visibility   = "Collapsed"
             $UserEnable_btn.Visibility    = "Visible"
         }
-    $Locked = (Get-ADUser -Identity $SelectedUser | Select-Object LockedOut).LockedOut
+    $Locked = (Get-ADUser -Identity $script:SelectedADUser -Properties LockedOut).LockedOut
     if($Locked){
-        $UserDisable_btn.Visibility   = "Visible"
-        $UserEnable_btn.Visibility    = "Collapsed"
+        $UserUnlock_btn.Visibility  = "Visible"
     } else {
-        $UserDisable_btn.Visibility   = "Collapsed"
-        $UserEnable_btn.Visibility    = "Visible"
+        $UserUnlock_btn.Visibility  = "Collapsed"
     }
 })
 #-------------------------------------------------------- AD Computers ---------------------------------------
-$ADComputerSearch_txtbx = $MainWindow.FindName("ADComputerSearch_txtbx")
-$AllADComp_Dgrid        = $MainWindow.FindName("AllADComp_Dgrid")
-$RefreshComputerList_btn= $MainWindow.FindName("RefreshComputerList_btn")
-$DiscoADComputer_btn    = $MainWindow.FindName("DiscoADComputer_btn")
-$RDPComputer_btn        = $MainWindow.FindName("RDPComputer_btn")
-$RemoteAssistAD_btn     = $MainWindow.FindName("RemoteAssistAD_btn")
-$ShutdownPC_btn         = $MainWindow.FindName("ShutdownPC_btn")
-$RestartPC_btn          = $MainWindow.FindName("RestartPC_btn")
-$DisableADComputer_btn  = $MainWindow.FindName("DisableADComputer_btn")
-$EnableADComputer_btn   = $MainWindow.FindName("EnableADComputer_btn")
-$SelectedADPCUser_txtbx = $MainWindow.FindName("SelectedADPCUser_txtbx")
-$SelectedADPCName_txtbx = $MainWindow.FindName("SelectedADPCName_txtbx")
+$ADComputerSearch_txtbx     = $MainWindow.FindName("ADComputerSearch_txtbx")
+$AllADComp_Dgrid            = $MainWindow.FindName("AllADComp_Dgrid")
+$RefreshComputerList_btn    = $MainWindow.FindName("RefreshComputerList_btn")
+$DiscoADComputer_btn        = $MainWindow.FindName("DiscoADComputer_btn")
+$RDPComputer_btn            = $MainWindow.FindName("RDPComputer_btn")
+$RemoteAssistAD_btn         = $MainWindow.FindName("RemoteAssistAD_btn")
+$ShutdownPC_btn             = $MainWindow.FindName("ShutdownPC_btn")
+$RestartPC_btn              = $MainWindow.FindName("RestartPC_btn")
+$DisableADComputer_btn      = $MainWindow.FindName("DisableADComputer_btn")
+$EnableADComputer_btn       = $MainWindow.FindName("EnableADComputer_btn")
+$SelectedADPCUser_txtbx     = $MainWindow.FindName("SelectedADPCUser_txtbx")
+$SelectedADPCName_txtbx     = $MainWindow.FindName("SelectedADPCName_txtbx")
+$RA_btn_visibility_override = $MainWindow.FindName("RA_btn_visibility_override")
 function Get_ADComputers {
     $ComputerExclusions = $config.Computer_Exclusions
     $OUExclusions = $config.OU_Exclusions
@@ -353,13 +352,18 @@ $EnableADComputer_btn.Add_Click({
     Enable_SelectedAccount -selectedAccount $script:SelectedADComputer
 
 })
-
+$RDPComputer_btn.Add_Click({
+    mstsc /v:$script:SelectedADComputer
+})
 $AllADComp_Dgrid.Add_SelectionChanged({
     $script:SelectedADComputer = $AllADComp_Dgrid.SelectedItem.Name
+    $RemoteAssistAD_btn.Visibility  = "Collapsed"
+    $RA_btn_visibility_override.IsChecked = $false
     $SelectedADPCName_txtbx.Text = $script:SelectedADComputer
     if($script:SelectedADComputer){
         $ShutdownPC_btn.Visibility              = "Visible"
         $RestartPC_btn.Visibility               = "Visible"
+        $RA_btn_visibility_override.Visibility  = "Visible"
         $Enabled = (Get-ADComputer -Identity $script:SelectedADComputer | Select-Object Enabled).Enabled
         if($Enabled){
             $DisableADComputer_btn.Visibility   = "Visible"
@@ -369,12 +373,20 @@ $AllADComp_Dgrid.Add_SelectionChanged({
             $EnableADComputer_btn.Visibility    = "Visible"
         }
         $SelectedADPCUser_txtbx.Text = (Get_ActiveUser($script:SelectedADComputer)).Name
-        if(-not $SelectedADPCUser_txtbx.Text -eq ""){
+        if($SelectedADPCUser_txtbx.Text -ne ""){
+            $RA_btn_visibility_override.Add_Unchecked{
+                $RemoteAssistAD_btn.Visibility  = "Visible"
+            }
             $DiscoADComputer_btn.Visibility     = "Visible"
             $RemoteAssistAD_btn.Visibility      = "Visible"
-            $RDPComputer_btn.Visibiibility      = "Collapsed"
-            $RemoteAssistAD_btn.Visibility      = "Collapsed"
+            $RDPComputer_btn.Visibility         = "Collapsed"
+        } else {
             $RDPComputer_btn.Visibility         = "Visible"
+            $DiscoADComputer_btn.Visibility     = "Collapsed"
+            $RemoteAssistAD_btn.Visibility      = "Collapsed"
+            $RA_btn_visibility_override.Add_Unchecked{
+                $RemoteAssistAD_btn.Visibility  = "Collapsed"
+            }
         }
     } else {
         $DiscoADComputer_btn.Visibility         = "Collapsed"
@@ -384,8 +396,15 @@ $AllADComp_Dgrid.Add_SelectionChanged({
         $RestartPC_btn.Visibility               = "Collapsed"
         $DisableADComputer_btn.Visibility       = "Collapsed"
         $EnableADComputer_btn.Visibility        = "Collapsed"
+        $RA_btn_visibility_override.Visibility  = "Collapsed"
+        $RemoteAssistAD_btn.Visibility          = "Collapsed"
     }
 })
+$RA_btn_visibility_override.Add_Checked{
+    $RemoteAssistAD_btn.Visibility  = "Visible"
+}
+
+
 #------------------------------------------------ VM ------------------------------------------------
 $RefreshVMList_btn      = $MainWindow.FindName("RefreshVMList_btn")
 $AllVMComp_Dgrid        = $MainWindow.FindName("AllVMComp_Dgrid")
@@ -466,6 +485,7 @@ function Get_VMList {
     if (-not $script:admin.password -or -not $script:admin.username){
         return
     }
+    Connect_VIServers
     Get_ADUsers
     $script:VMList = @()
     foreach ($server in $hv_servers) {
@@ -613,7 +633,6 @@ $FilterVMServ_btn.Add_Click({
     }
 })
 $RefreshVMList_btn.Add_Click({
-    Connect_VIServers
     Get_VMList
     $script:ServerCheckBoxes = @()
     $FilterVMServ_stckpnl.Children.Clear()
@@ -637,21 +656,59 @@ $RefreshVMList_btn.Add_Click({
     }   
 })
 $AllVMComp_Dgrid.Add_SelectionChanged({
+    if ($null -eq $AllVMComp_Dgrid.SelectedItem) {
+        $script:SelectedVM = $null
+        $script:SelectedVMUser = $null
+        $script:SelectedServer = $null
+    }
     $script:SelectedVMUser = $AllVMComp_Dgrid.SelectedItem.SamAccountName
     $script:SelectedVM = $AllVMComp_Dgrid.SelectedItem.MachineName
     $script:SelectedServer = $AllVMComp_Dgrid.SelectedItem.Server
-    if ($script:SelectedVM) {
+    $SelectedVMName_cmbbx.SelectedIndex = -1;
+    $SelectedVMUser_cmbbx.SelectedIndex = -1;
+    if ($null -ne $script:SelectedVM) {
         $vmIndex = $SelectedVMName_cmbbx.Items.IndexOf($script:SelectedVM)
         if ($vmIndex -ge 0) { $SelectedVMName_cmbbx.SelectedIndex = $vmIndex }
+        $RemoteAssistVM_btn.Visibility = "Visible"
+        $ShutdownVM_btn.Visibility = "Visible"
+        $RestartVM_btn.Visibility = "Visible"
+        $StartupVM_btn.Visibility = "Visible"
+    } else {
+        $RemoteAssistVM_btn.Visibility = "Collapsed"
+        $ShutdownVM_btn.Visibility = "Collapsed"
+        $RestartVM_btn.Visibility = "Collapsed"
+        $StartupVM_btn.Visibility = "Collapsed"
     }
-    if ($script:SelectedVMUser) {
+    if ($null -ne $script:SelectedVMUser) {
         $userIndex = $SelectedVMUser_cmbbx.Items.IndexOf($script:SelectedVMUser)
         if ($userIndex -ge 0) { $SelectedVMUser_cmbbx.SelectedIndex = $userIndex }
     }
     $ConnectedVMUser_txtbx.Text = (Get_ActiveUser($script:SelectedVM)).Name
-    
+    if($script:SelectedVMUser -and $script:SelectedVM){
+        $UnassignVM_btn.Visibility = "Visible"
+        if($null -ne $ConnectedVMUser_txtbx.text){
+            $DiscoVMComputer_btn.Visibility = "Visible"
+        } else {
+            $DiscoVMComputer_btn.Visibility = "Collapsed"
+        }
+        
+    } else {
+        $UnassignVM_btn.Visibility = "Collapsed"
+        $DiscoVMComputer_btn.Visibility = "Collapsed"
+    }
+    if (($script:SelectedVM -and $script:SelectedVMUser_Changed) -or ($script:SelectedVMUser -and $script:SelectedVMComp_Changed) -or $script:UnassignAction){
+        $AssignVM_btn.Visibility = "Visible"
+    }
+    else {
+        $AssignVM_btn.Visibility = "Collapsed"
+    }
 })
-
+$SelectedVMUser_cmbbx.Add_SelectionChanged{
+    $script:SelectedVMUser_Changed = $true
+}
+$SelectedVMName_cmbbx.Add_SelectionChanged{
+    $script:SelectedVMComp_Changed = $true
+}
 $VMSearch_txtbx.Add_TextChanged({
     Search_VMGrid
 })
@@ -672,9 +729,12 @@ $StartupVM_btn.Add_Click({
     Start_VM -machine $script:SelectedVM
 })
 $UnassignVM_btn.Add_Click({
+    $script:UnassignAction = $true
     Unassign_VM -machine $script:SelectedVM -server $script:SelectedServer
 })
 $AssignVM_btn.Add_Click({
+    $script:SelectedVMComp_Changed = $false
+    $script:SelectedVMUser_Changed = $false
     $AssignedMachine = $SelectedVMName_cmbbx.SelectedItem
     $AssignedUser = $SelectedVMUser_cmbbx.SelectedItem
     $AssignedMachineServer = $script:VMList | Where-Object { $_.MachineName -like $AssignedMachine } | Select-Object Server
@@ -690,7 +750,7 @@ $MainWindow.Add_Closing({
         Disconnect-VIServer * -Confirm:$false
     } catch{continue}
     
-	close
+	exit
 })
 
 $MainWindow.ShowDialog() | Out-Null
