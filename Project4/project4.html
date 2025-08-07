@@ -966,6 +966,7 @@
                 <pre><code>
     &lt;Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:local="WpfApp.BusyAnimation"
             xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             Title="AdminTool" Height="634" SizeToContent="Width" Width="848"&gt;
 
@@ -1002,14 +1003,15 @@
                 &lt;StackPanel DockPanel.Dock="left" Height="Auto" Width="125"&gt;
                     &lt;TextBox x:Name="SelectedADPCUser_txtbx"    TextWrapping="Wrap" Text="User" IsReadOnly="True"/&gt;
                     &lt;TextBox x:Name="SelectedADPCName_txtbx"    TextWrapping="Wrap" Text="PC" IsReadOnly="True" Margin="0,0,0,5"/&gt;
-                    &lt;Button  Visibility="Hidden" x:Name="DiscoADComputer_btn"         VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Disconnect User"  Width="100"/&gt;
-                    &lt;Button  Visibility="Hidden" x:Name="RDPComputer_btn"             VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Remote Desktop"   Width="100"/&gt;
-                    &lt;Button  Visibility="Hidden" x:Name="RemoteAssistAD_btn"          VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Remote Assist"    Width="100"/&gt;
-                    &lt;Button  Visibility="Hidden" x:Name="ShutdownPC_btn"              VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Shutdown"         Width="100"/&gt;
-                    &lt;Button  Visibility="Hidden" x:Name="RestartPC_btn"               VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Restart"          Width="100"/&gt;
-                    &lt;Button  Visibility="Hidden" x:Name="DisableADComputer_btn"       VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Disable"          Width="100"/&gt;
-                    &lt;Button  Visibility="Hidden" x:Name="EnableADComputer_btn"        VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Enable"           Width="100"/&gt;
+                    &lt;Button  Visibility="Collapsed" x:Name="DiscoADComputer_btn"         VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Disconnect User"  Width="100"/&gt;
+                    &lt;Button  Visibility="Collapsed" x:Name="RDPComputer_btn"             VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Remote Desktop"   Width="100"/&gt;
+                    &lt;Button  Visibility="Collapsed" x:Name="RemoteAssistAD_btn"          VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Remote Assist"    Width="100"/&gt;
+                    &lt;Button  Visibility="Collapsed" x:Name="ShutdownPC_btn"              VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Shutdown"         Width="100"/&gt;
+                    &lt;Button  Visibility="Collapsed" x:Name="RestartPC_btn"               VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Restart"          Width="100"/&gt;
+                    &lt;Button  Visibility="Collapsed" x:Name="DisableADComputer_btn"       VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Disable"          Width="100"/&gt;
+                    &lt;Button  Visibility="Collapsed" x:Name="EnableADComputer_btn"        VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Enable"           Width="100"/&gt;
                 &lt;/StackPanel&gt;
+                &lt;CheckBox Visibility="Collapsed" x:Name="RA_btn_visibility_override" ToolTip="Enables Remote Assist regardless of if there is a user available. &#10;Used in instances where query for active user has insufficient permissions or unable to find active user." DockPanel.Dock="Left" Content="No Active User RA" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-124,0,0,0"/&gt;
                 &lt;DataGrid DockPanel.Dock="Right" x:Name="AllADComp_Dgrid" CanUserSortColumns="True" SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="True" IsReadOnly="True" IsManipulationEnabled="True" Height="Auto"/&gt;
             &lt;/DockPanel&gt;
             &lt;DockPanel LastChildFill="True" Width="424" Margin="0,305,0,3" HorizontalAlignment="Left"&gt;
@@ -1057,14 +1059,14 @@
                     &lt;/TextBox&gt;
                 &lt;/DockPanel&gt;
                 &lt;StackPanel DockPanel.Dock="Left" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanHorizontallyScroll="True" CanVerticallyScroll="True" Width="125"&gt;
-                    &lt;TextBox x:Name="SelectedUser_txtbx" TextWrapping="Wrap" Text="User" IsReadOnly="True"/&gt;
-                    &lt;Button x:Name="UserUnlock_btn" Visibility="Collapsed" Content="Unlock" Height="20" Margin="0,8,0,8"/&gt;
-                    &lt;Button x:Name="UserDisable_btn" Visibility="Collapsed" Content="Disable" Height="20" Margin="0,0,0,8"/&gt;
-                    &lt;Button x:Name="UserEnable_btn" Visibility="Collapsed" Content="Enable" Height="20" Margin="0,0,0,8"/&gt;
-                    &lt;DockPanel  Visibility="Collapsed" LastChildFill="True" x:Name="PasswordOptions_dock" Width="Auto" Height="Auto" Margin="0,4,0,0"&gt;
+                    &lt;TextBox    x:Name="SelectedUser_txtbx" TextWrapping="Wrap" Text="User" IsReadOnly="True"/&gt;
+                    &lt;Button     x:Name="UserUnlock_btn"         Visibility="Visible" Content="Unlock" Height="20" Margin="0,8,0,8"/&gt;
+                    &lt;Button     x:Name="UserDisable_btn"        Visibility="Visible" Content="Disable" Height="20" Margin="0,0,0,8"/&gt;
+                    &lt;Button     x:Name="UserEnable_btn"         Visibility="Visible" Content="Enable" Height="20" Margin="0,0,0,8"/&gt;
+                    &lt;DockPanel  x:Name="PasswordOptions_dock"   Visibility="Visible" LastChildFill="True"  Width="Auto" Height="Auto" Margin="0,4,0,0"&gt;
                         &lt;Label DockPanel.Dock="Top" Content="Password Options" Height="12" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFDFF6FC" BorderBrush="#3F0562B5" BorderThickness="0,1,0,0" FontSize="8"/&gt;
                         &lt;Button x:Name="UserExpirePass_btn" DockPanel.Dock="Bottom" Content="Expire" Height="20" Margin="0,4,0,0"/&gt;
-                        &lt;Button DockPanel.Dock="Left" IsEnabled="False" x:Name="UserSetPass_btn" Content="Set" Width="24" Height="20"/&gt;
+                        &lt;Button x:Name="UserSetPass_btn"    DockPanel.Dock="Left"   Content="Set" IsEnabled="False" Width="24" Height="20"/&gt;
                         &lt;DockPanel DockPanel.Dock="Right" Height="20" Width="24" &gt;
                             &lt;Button DockPanel.Dock="Top" x:Name="PreviewPass_btn" Content="Show&#xA;" ToolTip="Show/Hide Password" Height="10" BorderBrush="#FFABADB3" Width="24" Foreground="#7F000000" FontSize="7" Padding="1,1,1,1" UseLayoutRounding="True"/&gt;
                             &lt;Button DockPanel.Dock="Bottom" x:Name="CopyPass_btn" Content="Copy&#xA;" ToolTip="Copy Password" Height="10" BorderBrush="#FFABADB3" Width="24" Foreground="#7F000000" FontSize="8" Padding="1,1,1,1" UseLayoutRounding="True" Margin="0,0,0,-1"/&gt;
@@ -1115,28 +1117,28 @@
                     &lt;/TextBox&gt;
                 &lt;/DockPanel&gt;
                 &lt;StackPanel DockPanel.Dock="left" Height="Auto" Width="125"&gt;
-                    &lt;TextBox x:Name="ConnectedVMUser_txtbx"   TextWrapping="Wrap" Text="Connected User" IsReadOnly="True"/&gt;
+                    &lt;TextBox x:Name="ConnectedVMUser_txtbx"   TextWrapping="Wrap" Text="" IsReadOnly="True"/&gt;
                     &lt;ComboBox x:Name="SelectedVMUser_cmbbx"     Visibility="Visible" Text="User"/&gt;
                     &lt;ComboBox x:Name="SelectedVMName_cmbbx"     Visibility="Visible" Text="PC" Margin="0,0,0,5"/&gt;
-                    &lt;Button  x:Name="DiscoVMComputer_btn"       Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Disconnect User"  Width="100"/&gt;
-                    &lt;Button  x:Name="RemoteAssistVM_btn"        Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Remote Assist"    Width="100"/&gt;
-                    &lt;Button  x:Name="ShutdownVM_btn"            Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Shutdown"         Width="100"/&gt;
-                    &lt;Button  x:Name="RestartVM_btn"             Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Restart"          Width="100"/&gt;
-                    &lt;Button  x:Name="StartupVM_btn"             Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Startup"          Width="100"/&gt;
-                    &lt;Button  x:Name="UnassignVM_btn"            Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Unassign"         Width="100"/&gt;
-                    &lt;Button  x:Name="AssignVM_btn"              Visibility="Visible"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Assign"         Width="100"/&gt;
+                    &lt;Button  x:Name="DiscoVMComputer_btn"       Visibility="Collapsed"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Disconnect User"  Width="100"/&gt;
+                    &lt;Button  x:Name="RemoteAssistVM_btn"        Visibility="Collapsed"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Remote Assist"    Width="100"/&gt;
+                    &lt;Button  x:Name="ShutdownVM_btn"            Visibility="Collapsed"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Shutdown"         Width="100"/&gt;
+                    &lt;Button  x:Name="RestartVM_btn"             Visibility="Collapsed"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Restart"          Width="100"/&gt;
+                    &lt;Button  x:Name="StartupVM_btn"             Visibility="Collapsed"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Startup"          Width="100"/&gt;
+                    &lt;Button  x:Name="UnassignVM_btn"            Visibility="Collapsed"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Unassign"         Width="100"/&gt;
+                    &lt;Button  x:Name="AssignVM_btn"              Visibility="Collapsed"  VerticalContentAlignment="Stretch" Margin="0,0,0,5" HorizontalContentAlignment="Stretch" Content="Assign"         Width="100"/&gt;
                 &lt;/StackPanel&gt;
                 &lt;DataGrid DockPanel.Dock="Right" x:Name="AllVMComp_Dgrid" CanUserSortColumns="True" SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="True" IsReadOnly="True" IsManipulationEnabled="True" Height="Auto"/&gt;
             &lt;/DockPanel&gt;
             &lt;TextBox x:Name="PassPreview_txtbx"
                 Panel.ZIndex="999"
-                Visibility="Hidden"
+                Visibility="Collapsed"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
                 Margin="24,447,0,0"
                 MinWidth="77" Height="20" Width="77"/&gt;
         &lt;/Grid&gt;
-    &lt;/Window&gt; 
+    &lt;/Window&gt;
                 </code></pre>
             </div>
             <div class="code-toggle-header" onclick="toggleCode(this)">
@@ -1256,7 +1258,8 @@
     $DisableADComputer_btn  = $MainWindow.FindName("DisableADComputer_btn")
     $EnableADComputer_btn   = $MainWindow.FindName("EnableADComputer_btn")
     $SelectedADPCUser_txtbx = $MainWindow.FindName("SelectedADPCUser_txtbx")
-    $SelectedADPCName_txtbx = $MainWindow.FindName("SelectedADPCName_txtbx")                                      
+    $SelectedADPCName_txtbx = $MainWindow.FindName("SelectedADPCName_txtbx")
+    $RA_btn_visibility_override = $MainWindow.FindName("RA_btn_visibility_override")                                      
     $RefreshVMList_btn      = $MainWindow.FindName("RefreshVMList_btn")
     $AllVMComp_Dgrid        = $MainWindow.FindName("AllVMComp_Dgrid")
     $VMSearch_txtbx         = $MainWindow.FindName("VMSearch_txtbx")
@@ -1299,192 +1302,194 @@
                     <button class="copy-button" onclick="copyCode(this)">Copy</button>
                     <pre><code>
     $FilterPanelExpand_btn.Add_Click({
-    switch ($FilterPanel_stckpnl.Visibility) {
-    "Collapsed" {
-        $FilterPanel_stckpnl.Visibility = "Visible"
-        $FilterPanelExpand_btn.Content   = ". . ."
-    }
-    "Visible" {
-        $FilterPanel_stckpnl.Visibility = "Collapsed"
-        $FilterPanelExpand_btn.Content   = "Filter"
-    }
-    }
+        switch ($FilterPanel_stckpnl.Visibility) {
+            "Collapsed" {
+                $FilterPanel_stckpnl.Visibility = "Visible"
+                $FilterPanelExpand_btn.Content   = ". . ."
+            }
+            "Visible" {
+                $FilterPanel_stckpnl.Visibility = "Collapsed"
+                $FilterPanelExpand_btn.Content   = "Filter"
+            }
+        }
     })
     $FilterADLocked_cb.Add_Checked({
-    Update_FilteredUserList
+        Update_FilteredUserList
     })
     $FilterADLocked_cb.Add_Unchecked({    
-    Update_FilteredUserList
+        Update_FilteredUserList
     })
     $FilterADExpired_cb.Add_Checked({    
-    Update_FilteredUserList
+        Update_FilteredUserList
     })
     $FilterADExpired_cb.Add_Unchecked({    
-    Update_FilteredUserList
+        Update_FilteredUserList
     })
     $FilterADDisabled_cb.Add_Checked({     
-    Update_FilteredUserList
+        Update_FilteredUserList
     })
     $FilterADDisabled_cb.Add_Unchecked({     
-    Update_FilteredUserList
+        Update_FilteredUserList
     })
     $ADUserSearch_txtbx.Add_TextChanged({
-    Search_ADUsers
+        Search_ADUsers
     })
     $UserUnlock_btn.Add_Click({
-    Unlock_SelectedUser($ADUser_list.SelectedItem.SamAccountName)
+        Unlock_SelectedUser($ADUser_list.SelectedItem.SamAccountName)
     })
     $UserExpirePass_btn.Add_Click({
-    Expire_SelectedUser($ADUser_list.SelectedItem.SamAccountName)
+        Expire_SelectedUser($ADUser_list.SelectedItem.SamAccountName)
 
     })
     $UserSetPass_btn.Add_Click({
-    if($null -eq $SetPass_txtbx.Password.Trim()){
-    [System.Windows.MessageBox]::Show("No password entered.")
-    } else {
-    Set_SelectedUserPass($ADUser_list.SelectedItem.SamAccountName)
-    }
+        if($null -eq $SetPass_txtbx.Password.Trim()){
+            [System.Windows.MessageBox]::Show("No password entered.")
+        } else {
+            Set_SelectedUserPass($ADUser_list.SelectedItem.SamAccountName)
+        }
     })
     $UserDisable_btn.Add_Click({
-    Disable_SelectedAccount($ADUser_list.SelectedItem.SamAccountName)
+        Disable_SelectedAccount($ADUser_list.SelectedItem.SamAccountName)
     })
     $UserEnable_btn.Add_Click({
-    Enable_SelectedAccount($ADUser_list.SelectedItem.SamAccountName)
+        Enable_SelectedAccount($ADUser_list.SelectedItem.SamAccountName)
     })
     $ADUserListRefresh_btn.Add_Click({
-    Get_ADUsers
-    Get_ADUserstatus
-    $ADUser_list.ItemsSource = $script:ADUserStatus
-    $FilterADLocked_cb.IsChecked = "False"
-    $FilterADExpired_cb.IsChecked = "False"
-    $FilterADDisabled_cb.IsChecked = "False"
+        Get_ADUsers
+        Get_ADUserstatus
+        $ADUser_list.ItemsSource = $script:ADUserStatus
+        $FilterADLocked_cb.IsChecked = "False"
+        $FilterADExpired_cb.IsChecked = "False"
+        $FilterADDisabled_cb.IsChecked = "False"
     })
     $ADUser_list.Add_SelectionChanged({
-    $SelectedUser_txtbx.Text = $ADUser_List.SelectedItem.Name
+        $SelectedUser_txtbx.Text = $ADUser_List.SelectedItem.Name
     })
     $PreviewPass_btn.Add_PreviewMouseLeftButtonDown({
-    $PassPreview_txtbx.text = $SetPass_txtbx.Password
-    $SetPass_txtbx.Visibility = [System.Windows.Visibility]::Collapsed
-    $PassPreview_txtbx.Visibility = [System.Windows.Visibility]::Visible
-    $PassPreview_txtbx.Width = ($PassPreview_txtbx.Text.Length * $PassPreview_txtbx.FontSize) * 0.55
+        $PassPreview_txtbx.text = $SetPass_txtbx.Password
+        $SetPass_txtbx.Visibility = [System.Windows.Visibility]::Collapsed
+        $PassPreview_txtbx.Visibility = [System.Windows.Visibility]::Visible
+        $PassPreview_txtbx.Width = ($PassPreview_txtbx.Text.Length * $PassPreview_txtbx.FontSize) * 0.55
     })
     $PreviewPass_btn.Add_PreviewMouseLeftButtonUp({
-    $PassPreview_txtbx.Text = ""
-    $SetPass_txtbx.Visibility = [System.Windows.Visibility]::Visible
-    $PassPreview_txtbx.Visibility = [System.Windows.Visibility]::Collapsed
-    [System.Windows.Controls.Panel]::SetZIndex($PassPreview_txtbx, 0)
+        $PassPreview_txtbx.Text = ""
+        $SetPass_txtbx.Visibility = [System.Windows.Visibility]::Visible
+        $PassPreview_txtbx.Visibility = [System.Windows.Visibility]::Collapsed
+        [System.Windows.Controls.Panel]::SetZIndex($PassPreview_txtbx, 0)
     })
     $CopyPass_btn.Add_Click({
-    $Password = $SetPass_txtbx.Password
-    [System.Windows.Clipboard]::SetText($Password)
+        $Password = $SetPass_txtbx.Password
+        [System.Windows.Clipboard]::SetText($Password)
     })
     $ADUser_list.Add_SelectionChanged({
-    $script:SelectedADUser = $ADUser_list.SelectedItem.SamAccountName
-    $PasswordOptions_dock.Visibility = "Visible"
-    $Enabled = (Get-ADUser -Identity $SelectedUser | Select-Object Enabled).Enabled
-    if($Enabled){
-        $UserDisable_btn.Visibility   = "Visible"
-        $UserEnable_btn.Visibility    = "Collapsed"
-    } else {
-        $UserDisable_btn.Visibility   = "Collapsed"
-        $UserEnable_btn.Visibility    = "Visible"
-    }
-    $Locked = (Get-ADUser -Identity $SelectedUser | Select-Object LockedOut).LockedOut
-    if($Locked){
-    $UserDisable_btn.Visibility   = "Visible"
-    $UserEnable_btn.Visibility    = "Collapsed"
-    } else {
-    $UserDisable_btn.Visibility   = "Collapsed"
-    $UserEnable_btn.Visibility    = "Visible"
-    }
+        $script:SelectedADUser = $ADUser_list.SelectedItem.SamAccountName
+        $PasswordOptions_dock.Visibility = "Visible"
+        $Enabled = (Get-ADUser -Identity $script:SelectedADUser -Properties Enabled).Enabled
+            if($Enabled){
+                $UserDisable_btn.Visibility   = "Visible"
+                $UserEnable_btn.Visibility    = "Collapsed"
+            } else {
+                $UserDisable_btn.Visibility   = "Collapsed"
+                $UserEnable_btn.Visibility    = "Visible"
+            }
+        $Locked = (Get-ADUser -Identity $script:SelectedADUser -Properties LockedOut).LockedOut
+        if($Locked){
+            $UserUnlock_btn.Visibility  = "Visible"
+        } else {
+            $UserUnlock_btn.Visibility  = "Collapsed"
+        }
     })
     $RefreshComputerList_btn.Add_Click({
-    Get_ADComputers
-    $AllADComp_Dgrid.ItemsSource = $script:ADComputers
+        Get_ADComputers
+        $AllADComp_Dgrid.ItemsSource = $script:ADComputers
     })
     $ADComputerSearch_txtbx.Add_TextChanged({
-    Search_ADComputers
+        Search_ADComputers
     })
     $DiscoADComputer_btn.Add_Click({
-    Disconnect_ActiveUser -ComputerName $script:SelectedADComputer
+        Disconnect_ActiveUser -ComputerName $script:SelectedADComputer
     })
     $RemoteAssistAD_btn.Add_Click({
-    Send_RemAssist -ComputerName $script:SelectedADComputer
+        Send_RemAssist -ComputerName $script:SelectedADComputer
     })
     $ShutdownPC_btn.Add_Click({
-    Stop_Computer -ComputerName $script:SelectedADComputer
+        Stop_Computer -ComputerName $script:SelectedADComputer
     })
     $RestartPC_btn.Add_Click({
-    Restart_Computer -ComputerName $script:SelectedADComputer
+        Restart_Computer -ComputerName $script:SelectedADComputer
     })
     $DisableADComputer_btn.Add_Click({
-    Disable_SelectedAccount -selectedAccount $script:SelectedADComputer
+        Disable_SelectedAccount -selectedAccount $script:SelectedADComputer
     })
     $EnableADComputer_btn.Add_Click({
-    Enable_SelectedAccount -selectedAccount $script:SelectedADComputer
-
+        Enable_SelectedAccount -selectedAccount $script:SelectedADComputer
     })
-
+    $RDPComputer_btn.Add_Click({
+        mstsc /v:$script:SelectedADComputer
+    })
     $AllADComp_Dgrid.Add_SelectionChanged({
-    $script:SelectedADComputer = $AllADComp_Dgrid.SelectedItem.Name
-    $SelectedADPCName_txtbx.Text = $script:SelectedADComputer
-    if($script:SelectedADComputer){
-    $ShutdownPC_btn.Visibility              = "Visible"
-    $RestartPC_btn.Visibility               = "Visible"
-    $Enabled = (Get-ADComputer -Identity $script:SelectedADComputer | Select-Object Enabled).Enabled
-    if($Enabled){
-        $DisableADComputer_btn.Visibility   = "Visible"
-        $EnableADComputer_btn.Visibility    = "Collapsed"
-    } else {
-        $DisableADComputer_btn.Visibility   = "Collapsed"
-        $EnableADComputer_btn.Visibility    = "Visible"
-    }
-    $SelectedADPCUser_txtbx.Text = (Get_ActiveUser($script:SelectedADComputer)).Name
-    if(-not $SelectedADPCUser_txtbx.Text -eq ""){
-        $DiscoADComputer_btn.Visibility     = "Visible"
-        $RemoteAssistAD_btn.Visibility      = "Visible"
-        $RDPComputer_btn.Visibiibility      = "Collapsed"
-        $RemoteAssistAD_btn.Visibility      = "Collapsed"
-        $RDPComputer_btn.Visibility         = "Visible"
-    }
-    } else {
-    $DiscoADComputer_btn.Visibility         = "Collapsed"
-    $RDPComputer_btn.Visibility             = "Collapsed"
-    $RemoteAssistAD_btn.Visibility          = "Collapsed"
-    $ShutdownPC_btn.Visibility              = "Collapsed"
-    $RestartPC_btn.Visibility               = "Collapsed"
-    $DisableADComputer_btn.Visibility       = "Collapsed"
-    $EnableADComputer_btn.Visibility        = "Collapsed"
-    }
+        $script:SelectedADComputer = $AllADComp_Dgrid.SelectedItem.Name
+        $RemoteAssistAD_btn.Visibility  = "Collapsed"
+        $RA_btn_visibility_override.IsChecked = $false
+        $SelectedADPCName_txtbx.Text = $script:SelectedADComputer
+        if($script:SelectedADComputer){
+            $ShutdownPC_btn.Visibility              = "Visible"
+            $RestartPC_btn.Visibility               = "Visible"
+            $RA_btn_visibility_override.Visibility  = "Visible"
+            $Enabled = (Get-ADComputer -Identity $script:SelectedADComputer | Select-Object Enabled).Enabled
+            if($Enabled){
+                $DisableADComputer_btn.Visibility   = "Visible"
+                $EnableADComputer_btn.Visibility    = "Collapsed"
+            } else {
+                $DisableADComputer_btn.Visibility   = "Collapsed"
+                $EnableADComputer_btn.Visibility    = "Visible"
+            }
+            $SelectedADPCUser_txtbx.Text = (Get_ActiveUser($script:SelectedADComputer)).Name
+            if($SelectedADPCUser_txtbx.Text -ne ""){
+                $RA_btn_visibility_override.Add_Unchecked{
+                    $RemoteAssistAD_btn.Visibility  = "Visible"
+                }
+                $DiscoADComputer_btn.Visibility     = "Visible"
+                $RemoteAssistAD_btn.Visibility      = "Visible"
+                $RDPComputer_btn.Visibility         = "Collapsed"
+            } else {
+                $RDPComputer_btn.Visibility         = "Visible"
+                $DiscoADComputer_btn.Visibility     = "Collapsed"
+                $RemoteAssistAD_btn.Visibility      = "Collapsed"
+                $RA_btn_visibility_override.Add_Unchecked{
+                    $RemoteAssistAD_btn.Visibility  = "Collapsed"
+                }
+            }
+        } else {
+            $DiscoADComputer_btn.Visibility         = "Collapsed"
+            $RDPComputer_btn.Visibility             = "Collapsed"
+            $RemoteAssistAD_btn.Visibility          = "Collapsed"
+            $ShutdownPC_btn.Visibility              = "Collapsed"
+            $RestartPC_btn.Visibility               = "Collapsed"
+            $DisableADComputer_btn.Visibility       = "Collapsed"
+            $EnableADComputer_btn.Visibility        = "Collapsed"
+            $RA_btn_visibility_override.Visibility  = "Collapsed"
+            $RemoteAssistAD_btn.Visibility          = "Collapsed"
+        }
     })
-    $FilterVMServ_btn.Add_Click({
-    switch ($FilterVMServ_stckpnl.Visibility) {
-    "Collapsed" {
-        $FilterVMServ_stckpnl.Visibility = "Visible"
-        $FilterVMServ_btn.Content   = ". . ."
+    $RA_btn_visibility_override.Add_Checked{
+        $RemoteAssistAD_btn.Visibility  = "Visible"
     }
-    "Visible" {
-        $FilterVMServ_stckpnl.Visibility = "Collapsed"
-        $FilterVMServ_btn.Content   = "Filter"
-    }
-    }
-    })
     $RefreshVMList_btn.Add_Click({
-    Connect_VIServers
-    Get_VMList
-    $script:ServerCheckBoxes = @()
-    $FilterVMServ_stckpnl.Children.Clear()
-    $AllVMComp_Dgrid.ItemsSource = $null
-    $AllVMComp_Dgrid.ItemsSource = $script:VMList
-    $script:VMList | Where-Object { $_.Server } | Select-Object -ExpandProperty Server -Unique | Sort-Object | ForEach-Object {
-    $server = $_
-    $cb = New-Object System.Windows.Controls.CheckBox
-    $cb.Content = $server
-    $cb.Tag = $server
-    $cb.MaxWidth = "45"
+        Get_VMList
+        $script:ServerCheckBoxes = @()
+        $FilterVMServ_stckpnl.Children.Clear()
+        $AllVMComp_Dgrid.ItemsSource = $null
+        $AllVMComp_Dgrid.ItemsSource = $script:VMList
+        $script:VMList | Where-Object { $_.Server } | Select-Object -ExpandProperty Server -Unique | Sort-Object | ForEach-Object {
+        $server = $_
+        $cb = New-Object System.Windows.Controls.CheckBox
+        $cb.Content = $server
+        $cb.Tag = $server
+        $cb.MaxWidth = "45"
 
-    $cb.Add_Checked({
-        Filter_VMGrid
+        $cb.Add_Checked({
+            Filter_VMGrid
     })
     $cb.Add_Unchecked({
         Filter_VMGrid
@@ -1494,48 +1499,89 @@
     }   
     })
     $AllVMComp_Dgrid.Add_SelectionChanged({
-    $script:SelectedVMUser = $AllVMComp_Dgrid.SelectedItem.SamAccountName
-    $script:SelectedVM = $AllVMComp_Dgrid.SelectedItem.MachineName
-    $script:SelectedServer = $AllVMComp_Dgrid.SelectedItem.Server
-    if ($script:SelectedVM) {
-    $vmIndex = $SelectedVMName_cmbbx.Items.IndexOf($script:SelectedVM)
-    if ($vmIndex -ge 0) { $SelectedVMName_cmbbx.SelectedIndex = $vmIndex }
-    }
-    if ($script:SelectedVMUser) {
-    $userIndex = $SelectedVMUser_cmbbx.Items.IndexOf($script:SelectedVMUser)
-    if ($userIndex -ge 0) { $SelectedVMUser_cmbbx.SelectedIndex = $userIndex }
-    }
-    $ConnectedVMUser_txtbx.Text = (Get_ActiveUser($script:SelectedVM)).Name
-
+        if ($null -eq $AllVMComp_Dgrid.SelectedItem) {
+            $script:SelectedVM = $null
+            $script:SelectedVMUser = $null
+            $script:SelectedServer = $null
+        }
+        $script:SelectedVMUser = $AllVMComp_Dgrid.SelectedItem.SamAccountName
+        $script:SelectedVM = $AllVMComp_Dgrid.SelectedItem.MachineName
+        $script:SelectedServer = $AllVMComp_Dgrid.SelectedItem.Server
+        $SelectedVMName_cmbbx.SelectedIndex = -1;
+        $SelectedVMUser_cmbbx.SelectedIndex = -1;
+        if ($null -ne $script:SelectedVM) {
+            $vmIndex = $SelectedVMName_cmbbx.Items.IndexOf($script:SelectedVM)
+            if ($vmIndex -ge 0) { $SelectedVMName_cmbbx.SelectedIndex = $vmIndex }
+            $RemoteAssistVM_btn.Visibility = "Visible"
+            $ShutdownVM_btn.Visibility = "Visible"
+            $RestartVM_btn.Visibility = "Visible"
+            $StartupVM_btn.Visibility = "Visible"
+        } else {
+            $RemoteAssistVM_btn.Visibility = "Collapsed"
+            $ShutdownVM_btn.Visibility = "Collapsed"
+            $RestartVM_btn.Visibility = "Collapsed"
+            $StartupVM_btn.Visibility = "Collapsed"
+        }
+        if ($null -ne $script:SelectedVMUser) {
+            $userIndex = $SelectedVMUser_cmbbx.Items.IndexOf($script:SelectedVMUser)
+            if ($userIndex -ge 0) { $SelectedVMUser_cmbbx.SelectedIndex = $userIndex }
+        }
+        $ConnectedVMUser_txtbx.Text = (Get_ActiveUser($script:SelectedVM)).Name
+        if($script:SelectedVMUser -and $script:SelectedVM){
+            $UnassignVM_btn.Visibility = "Visible"
+            if($null -ne $ConnectedVMUser_txtbx.text){
+                $DiscoVMComputer_btn.Visibility = "Visible"
+            } else {
+                $DiscoVMComputer_btn.Visibility = "Collapsed"
+            }
+            
+        } else {
+            $UnassignVM_btn.Visibility = "Collapsed"
+            $DiscoVMComputer_btn.Visibility = "Collapsed"
+        }
+        if (($script:SelectedVM -and $script:SelectedVMUser_Changed) -or ($script:SelectedVMUser -and $script:SelectedVMComp_Changed) -or $script:UnassignAction){
+            $AssignVM_btn.Visibility = "Visible"
+        }
+        else {
+            $AssignVM_btn.Visibility = "Collapsed"
+        }
     })
+    $SelectedVMUser_cmbbx.Add_SelectionChanged{
+        $script:SelectedVMUser_Changed = $true
+    }
+    $SelectedVMName_cmbbx.Add_SelectionChanged{
+        $script:SelectedVMComp_Changed = $true
+    }
 
     $VMSearch_txtbx.Add_TextChanged({
-    Search_VMGrid
+        Search_VMGrid
     })
     $DiscoVMComputer_btn.Add_Click({
-    $script:SelectedVM
-    Disconnect_ActiveUser -SelectedComputer $script:SelectedVM
+        $script:SelectedVM
+        Disconnect_ActiveUser -SelectedComputer $script:SelectedVM
     })
     $RemoteAssistVM_btn.Add_Click({
-    Send_RemAssist -SelectedComputer $script:SelectedVM
+        Send_RemAssist -SelectedComputer $script:SelectedVM
     })
     $ShutdownVM_btn.Add_Click({
-    Stop_VM -machine $script:SelectedVM
+        Stop_VM -machine $script:SelectedVM
     })
     $RestartVM_btn.Add_Click({
-    Restart_VM -machine $script:SelectedVM -server $script:SelectedServer
+        Restart_VM -machine $script:SelectedVM -server $script:SelectedServer
     })
     $StartupVM_btn.Add_Click({
-    Start_VM -machine $script:SelectedVM
+        Start_VM -machine $script:SelectedVM
     })
     $UnassignVM_btn.Add_Click({
-    Unassign_VM -machine $script:SelectedVM -server $script:SelectedServer
+        Unassign_VM -machine $script:SelectedVM -server $script:SelectedServer
     })
     $AssignVM_btn.Add_Click({
-    $AssignedMachine = $SelectedVMName_cmbbx.SelectedItem
-    $AssignedUser = $SelectedVMUser_cmbbx.SelectedItem
-    $AssignedMachineServer = $script:VMList | Where-Object { $_.MachineName -like $AssignedMachine } | Select-Object Server
-    Assign_VM -machine $AssignedMachine -server $AssignedMachineServer -User $AssignedUser
+        $script:SelectedVMComp_Changed = $false
+        $script:SelectedVMUser_Changed = $false
+        $AssignedMachine = $SelectedVMName_cmbbx.SelectedItem
+        $AssignedUser = $SelectedVMUser_cmbbx.SelectedItem
+        $AssignedMachineServer = $script:VMList | Where-Object { $_.MachineName -like $AssignedMachine } | Select-Object Server
+        Assign_VM -machine $AssignedMachine -server $AssignedMachineServer -User $AssignedUser
     })  
                     </code></pre>
                 </div>
@@ -1755,7 +1801,7 @@
     function Send_RemAssist {
         param ([string]$SelectedComputer)
         msra /offerra $SelectedComputer
-    $logPath = "V:\RemoteAssist\remote assistance log.txt"
+    $logPath = "C:\RemoteAssistLog\remote assistance log.txt"
         $logLine = "$env:USERNAME, $SelectedComputer, $(Get-Date -Format 'HH:mm:ss.ff'), $(Get-Date -Format 'ddd MM/dd/yyyy')"
         Add-Content -Path $logPath -Value $logLine 
     }
@@ -1823,6 +1869,7 @@
         if (-not $script:admin.password -or -not $script:admin.username){
             return
         }
+        Connect_VIServers
         Get_ADUsers
         $script:VMList = @()
         foreach ($server in $hv_servers) {
@@ -1972,7 +2019,7 @@
             Disconnect-VIServer * -Confirm:$false
         } catch{continue}
         
-        exit
+        close
     })
 
     $MainWindow.ShowDialog() | Out-Null
@@ -1985,6 +2032,7 @@
             <p>If using PowerShell, simply typing the path to the file will launch it.</p>
             <p>To make it more simple and streamlined, you can create a shortcut to launch the script that opens the app.</p>
             <p>To create a shortcut, <strong>Right-click</strong> inside a folder, click <strong>New Shortcut</strong>.</p>
+            <p><strong>Note: When running, if there is a command that takes a while to run, the program will appear frozen. This is a limitation of PowerShell since it is single threaded</strong></p>
             <div class="collageguide">
                 <img src="images/CreatingShortcut_1.png">
                 <img src="images/CreatingShortcut_2.png">
@@ -1992,7 +2040,6 @@
             <p>For the location, enter C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Noexit -windowstyle hidden -File "the\path\to\your\.ps1"</p>
             <img class="imgguide" src="images/CreatingShortcut_3.png">
             <p>This will launch the script using PowerShell and minimize the terminal window since it will show the UI.</p>
-	    <p><strong>Note: When running, if there is a command that takes a while to run, the program will appear frozen. This is a limitation of PowerShell since it is single threaded</strong></p>
           </section>
             <hr class="solid">
           <section id="preview">
