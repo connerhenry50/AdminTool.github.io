@@ -44,6 +44,8 @@
           <li><a href="#config-file">Using a Config File</a></li>
           <li><a href="#binding-controls">Binding Controls to Variables</a></li>
           <li><a href="#functions">Functions</a></li>
+          <li><a href="#finaltouches">Final Touches</a></li>
+          <li><a href="#launching_app">Launching the App</a></li>
           <li><a href="#preview">Preview</a></li>
         </ol>
       </aside>
@@ -2026,13 +2028,26 @@
             </code></pre>
             <p>This code does a little more than open the window, however. Simply put, when closing the interface, it will disconnect any VSphere server connections and close the terminal window that is open in the background running our script.</p>
             <p>The final line is the most important part, it tells PowerShell to open the window and display our interface.</p>
-            <p>To launch the app, you can run the PowerShell file (.ps1) through a Command Prompt terminal or PowerShell terminal.</p>
-            <p>If using Command Prompt, type <code>PowerShell</code> then the <code>path</code> to your file.</p>
+          </section>
+          <hr class="solid">
+          <section id="launching_app">
+            <h2>Launching App</h2>
+            <h3>To launch the app, you can run the PowerShell file (.ps1) through a Command Prompt terminal or PowerShell terminal.</h3>
+            <p>If using Command Prompt</p>
+            <ul>
+                <li>Type <code>PowerShell</code> then the <code>path</code> to your file.</li>
+            </ul>
+            <p>If using PowerShell</p>
+            <ul>
+                <li>Simply typing the path to the file will launch it.</li>
+            </ul>
             <img class="imgguide" src="images/launching_cmd.png">
-            <p>If using PowerShell, simply typing the path to the file will launch it.</p>
             <p>To make it more simple and streamlined, you can create a shortcut to launch the script that opens the app.</p>
-            <p>To create a shortcut, <strong>Right-click</strong> inside a folder, click <strong>New Shortcut</strong>.</p>
-            <p><strong>Note: When running, if there is a command that takes a while to run, the program will appear frozen. This is a limitation of PowerShell since it is single threaded</strong></p>
+            <p>To create a shortcut:</p>
+            <ol>
+                <li><strong>Right-click</strong> inside a folder</li>
+                <li>Click <strong>New Shortcut</strong>.</li>
+            </ol>
             <div class="collageguide">
                 <img src="images/CreatingShortcut_1.png">
                 <img src="images/CreatingShortcut_2.png">
@@ -2040,15 +2055,16 @@
             <p>For the location, enter C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Noexit -windowstyle hidden -File "the\path\to\your\.ps1"</p>
             <img class="imgguide img-border" src="images/CreatingShortcut_3.png">
             <p>This will launch the script using PowerShell and minimize the terminal window since it will show the UI.</p>
+            <p><strong>Note: When running, if there is a command that takes a while to run, the program will appear frozen. This is a limitation of PowerShell since it is single threaded</strong></p>
           </section>
-            <hr class="solid">
+          <hr class="solid">
           <section id="preview">
             <h2>Previews</h2>
             <img class="imgguide img-border" src="images/preview_all.png">
             <p>Below is a preview of the file explorer contents of the App project.</p>
-            <p>Files in <strong>RED</strong> will need to be created.</p>
+            <p>Files in <strong>RED</strong> will need to be <strong>created</strong>.</p>
             <p>Other files will be automatically created when creating the WPF project in Visual Studio 2022</p>
-            <p>Files in <strong>BLUE</strong> will need to be edited</p>
+            <p>Files in <strong>BLUE</strong> will need to be <strong>edited</strong></p>
             <img class="imgguide" src="images/FileExplorerPreview.png">
             
           </section>
